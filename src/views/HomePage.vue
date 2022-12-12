@@ -2,7 +2,11 @@
   <div>
     <div class="game" :class="gameClass">
       <div class="info">
-        <CountdownClock v-if="gameState === 4" />
+        <TotalScore
+          v-if="gameState === 3 || gameState === 4"
+          :totalScore="totalScore"
+        />
+        <CountdownClock v-if="gameState === 4" :stopTimer="stopTimer" />
         <QuestionStepper
           v-if="gameState === 3 || gameState === 4"
           :currentQuestion="currentQuestion"
@@ -14,6 +18,8 @@
         @gameState="gameState = $event"
         :currentQuestion="currentQuestion"
         @changeCurrentQ="currentQuestion = $event"
+        @changeTimerStatus="stopTimer = $event"
+        @updateTotalScore="totalScore = $event"
       />
     </div>
     <ThreeTwoOne
@@ -28,6 +34,7 @@
       @showInstructions="showInstructions = $event"
       @gameState="gameState = $event"
     />
+    <EndOfGame v-if="gameState === 5" />
     <!-- <NextRound /> -->
   </div>
 </template>
@@ -39,6 +46,9 @@ import QuestionStepper from "../components/QuestionStepper.vue";
 import StartButton from "../components/StartButton.vue";
 import ThreeTwoOne from "../components/ThreeTwoOne.vue";
 import GameWindow from "../components/GameWindow.vue";
+import EndOfGame from "../components/EndOfGame.vue";
+import TotalScore from "../components/TotalScore.vue";
+
 // import NextRound from "../components/NextRound.vue";
 
 export default {
@@ -50,6 +60,8 @@ export default {
       gameClass: "",
       gameState: null,
       currentQuestion: -1,
+      stopTimer: false,
+      totalScore: null,
     };
   },
   methods: {
@@ -69,6 +81,8 @@ export default {
     StartButton,
     ThreeTwoOne,
     GameWindow,
+    EndOfGame,
+    TotalScore,
   },
   watch: {
     // showInstructions: function () {
@@ -83,7 +97,7 @@ export default {
   },
   mounted() {
     this.generateGameClass();
-    this.gameState = 1;
+    this.gameState = 2;
     this.$root.$on("stepping", ($event) => (this.currentQuestion = $event));
   },
 };

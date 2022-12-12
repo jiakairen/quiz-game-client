@@ -54,6 +54,8 @@ export default {
       thisRoundSelected: "",
       thisRoundPlayed: false,
       thisRoundCorrect: null,
+      thisRoundScore: null,
+      totalScore: 0,
       optionClass: {
         A: "",
         B: "",
@@ -75,7 +77,10 @@ export default {
       this.thisRoundPlayed = true;
     },
     nextQuestion() {
-      if (this.currentQuestion === 4) return;
+      if (this.currentQuestion === 4) {
+        this.$emit("gameState", 5);
+        return;
+      }
       this.tailText[this.thisRoundSelected] = null;
       this.$emit("changeCurrentQ", this.currentQuestion + 1);
       this.$emit("gameState", 3);
@@ -104,14 +109,32 @@ export default {
         this.optionClass[optionName] = "unselected";
       }
     },
-    calculateScore(optionName) {
-      if (optionName === this.thisRoundCorrect) {
-        this.tailText[optionName] = "+100 points";
-        return;
-      } else {
-        this.tailText[optionName] = "+0 points";
-        return;
-      }
+    calculateScore() {
+      this.$root.$on("timerStopped", ($event) => {
+        if (this.thisRoundSelected === this.thisRoundCorrect) {
+          this.thisRoundScore = 100 - (30 - $event) * 3;
+          return;
+        } else {
+          this.thisRoundScore = 0;
+          this.tailText[this.thisRoundSelected] = "+0 points";
+        }
+      });
+      // if (this.thisRoundSelected === this.thisRoundCorrect) {
+      //   console.log("correct, calculating score");
+      //   this.$root.$on("timerStopped", ($event) => {
+      //     this.thisRoundScore = 100 - (30 - $event) * 3;
+      //   });
+      //   return;
+      // } else {
+      //   console.log(this.thisRoundSelected, this.thisRoundCorrect);
+      //   console.log("incorrect, setting score to ZERO");
+      //   this.thisRoundScore = 0;
+      //   this.tailText[this.thisRoundSelected] = "+0 points";
+      //   return;
+      // }
+    },
+    updateTailText() {
+      this.tailText[this.thisRoundSelected] = `+${this.thisRoundScore} points`;
     },
   },
   components: {
@@ -124,11 +147,14 @@ export default {
       this.calculateClass("B", this.thisRoundCorrect, this.thisRoundSelected);
       this.calculateClass("C", this.thisRoundCorrect, this.thisRoundSelected);
       this.calculateClass("D", this.thisRoundCorrect, this.thisRoundSelected);
-      this.calculateScore(this.thisRoundSelected);
+      this.calculateScore();
+      this.$emit("changeTimerStatus", true);
     },
     currentQuestion: function () {
       this.$root.$emit("stepping", this.currentQuestion);
       this.thisRoundCorrect = this.quizSet[this.currentQuestion].correctLetter;
+      this.$emit("changeTimerStatus", false);
+      this.thisRoundScore = null;
     },
     quizSet: function () {
       for (let i = 0; i < this.quizSet.length; i++) {
@@ -144,6 +170,13 @@ export default {
         qS.correctLetter = correctLetter;
       }
       this.$emit("changeCurrentQ", this.currentQuestion + 1);
+    },
+    thisRoundScore: function () {
+      this.updateTailText();
+      this.totalScore += this.thisRoundScore;
+    },
+    totalScore: function () {
+      this.$emit("updateTotalScore", this.totalScore);
     },
   },
   props: ["currentQuestion"],

@@ -29,13 +29,15 @@ export default {
   },
   watch: {
     seconds: function () {
-      if (this.seconds === 0) {
+      if (this.seconds === 0 || this.stopTimer) {
         clearInterval(this.intervalID);
         this.intervalID = null;
+        this.$root.$emit("timerStopped", this.seconds);
       }
       return;
     },
   },
+  props: ["stopTimer"],
 };
 </script>
 
