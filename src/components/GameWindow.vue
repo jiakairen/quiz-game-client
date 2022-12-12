@@ -9,24 +9,28 @@
       :optionName="'A'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.A"
+      :tailText="tailText.A"
     />
     <QuizChoice
       :option="quizSet[currentQ]?.incorrectAnswers[0] || 'loading'"
       :optionName="'B'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.B"
+      :tailText="tailText.B"
     />
     <QuizChoice
       :option="quizSet[currentQ]?.incorrectAnswers[1] || 'loading'"
       :optionName="'C'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.C"
+      :tailText="tailText.C"
     />
     <QuizChoice
       :option="quizSet[currentQ]?.incorrectAnswers[2] || 'loading'"
       :optionName="'D'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.D"
+      :tailText="tailText.D"
     />
     <div class="game-controls">
       <button @click="nextQuestion">Next Question</button>
@@ -55,6 +59,12 @@ export default {
         C: "",
         D: "",
       },
+      tailText: {
+        A: null,
+        B: null,
+        C: null,
+        D: null,
+      },
     };
   },
   methods: {
@@ -64,6 +74,8 @@ export default {
       this.thisRoundPlayed = true;
     },
     nextQuestion() {
+      if (this.currentQ === 4) return;
+      this.tailText[this.thisRoundSelected] = null;
       this.currentQ++;
       this.thisRoundSelected = "";
       this.thisRoundPlayed = false;
@@ -82,7 +94,20 @@ export default {
         this.thisRoundPlayed
       ) {
         this.optionClass[optionName] = "incorrect";
+      } else if (
+        optionName !== correct &&
+        optionName !== selected &&
+        this.thisRoundPlayed
+      ) {
+        this.optionClass[optionName] = "unselected";
+      }
+    },
+    calculateScore(optionName) {
+      if (optionName === this.thisRoundCorrect) {
+        this.tailText[optionName] = "+100 points";
+        return;
       } else {
+        this.tailText[optionName] = "+0 points";
         return;
       }
     },
@@ -97,10 +122,14 @@ export default {
       this.calculateClass("B", this.thisRoundCorrect, this.thisRoundSelected);
       this.calculateClass("C", this.thisRoundCorrect, this.thisRoundSelected);
       this.calculateClass("D", this.thisRoundCorrect, this.thisRoundSelected);
+      this.calculateScore(this.thisRoundSelected);
+    },
+    currentQ: function () {
+      this.$root.$emit("stepping", this.currentQ);
     },
   },
   async mounted() {
-    this.quizSet = await api.getQuiz();
+    this.quizSet = (await api.getQuiz()).quizSet;
   },
 };
 </script>
@@ -132,5 +161,9 @@ export default {
 }
 .incorrect:hover {
   color: white;
+}
+
+.unselected {
+  opacity: 0.4;
 }
 </style>

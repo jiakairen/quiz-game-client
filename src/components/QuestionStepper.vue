@@ -13,6 +13,9 @@ export default {
       totalQuestion: 5,
     };
   },
+  mounted() {
+    this.$root.$on("stepping", ($event) => (this.currentQuestion = $event + 1));
+  },
 };
 </script>
 
