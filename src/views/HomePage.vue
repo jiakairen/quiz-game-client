@@ -2,21 +2,31 @@
   <div>
     <div class="game" :class="gameClass">
       <div class="info">
-        <CountdownClock />
-        <QuestionStepper />
+        <CountdownClock v-if="gameState === 4" />
+        <QuestionStepper
+          v-if="gameState === 3 || gameState === 4"
+          :currentQuestion="currentQuestion"
+        />
       </div>
-      <StartButton />
+      <StartButton v-if="gameState === 2" @gameState="gameState = $event" />
+      <GameWindow
+        v-if="gameState === 3 || gameState === 4"
+        @gameState="gameState = $event"
+        :currentQuestion="currentQuestion"
+        @changeCurrentQ="currentQuestion = $event"
+      />
     </div>
-    <GameWindow />
     <ThreeTwoOne
-      v-if="!threeTwoOneAtZero"
+      v-if="gameState === 3"
       class="three-two-one"
       @threeTwoOneAtZero="threeTwoOneAtZero = $event"
+      @gameState="gameState = $event"
     />
     <InstructionPage
-      v-if="showInstructions"
+      v-if="showInstructions && gameState === 1"
       class="instruction-popup"
       @showInstructions="showInstructions = $event"
+      @gameState="gameState = $event"
     />
     <!-- <NextRound /> -->
   </div>
@@ -35,14 +45,16 @@ export default {
   name: "homePage",
   data() {
     return {
-      showInstructions: false,
+      showInstructions: true,
       threeTwoOneAtZero: false,
       gameClass: "",
+      gameState: null,
+      currentQuestion: -1,
     };
   },
   methods: {
     generateGameClass() {
-      if (this.showInstructions || !this.threeTwoOneAtZero) {
+      if (this.gameState === 1 || this.gameState === 3) {
         this.gameClass = "blurred";
       } else {
         this.gameClass = "";
@@ -57,18 +69,22 @@ export default {
     StartButton,
     ThreeTwoOne,
     GameWindow,
-    // NextRound,
   },
   watch: {
-    showInstructions: function () {
-      this.generateGameClass();
-    },
-    threeTwoOneAtZero: function () {
+    // showInstructions: function () {
+    //   this.generateGameClass();
+    // },
+    // threeTwoOneAtZero: function () {
+    //   this.generateGameClass();
+    // },
+    gameState: function () {
       this.generateGameClass();
     },
   },
   mounted() {
     this.generateGameClass();
+    this.gameState = 1;
+    this.$root.$on("stepping", ($event) => (this.currentQuestion = $event));
   },
 };
 </script>

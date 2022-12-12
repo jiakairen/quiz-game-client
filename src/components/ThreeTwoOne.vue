@@ -30,6 +30,7 @@ export default {
         clearInterval(this.intervalID);
         this.intervalID = null;
         this.$emit("threeTwoOneAtZero", true);
+        this.$emit("gameState", 4);
       }
       return;
     },

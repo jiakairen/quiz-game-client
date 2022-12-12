@@ -10,7 +10,7 @@ export default {
   name: "StartButton",
   methods: {
     startGame() {
-      console.log("start game");
+      this.$emit("gameState", 3);
     },
   },
 };

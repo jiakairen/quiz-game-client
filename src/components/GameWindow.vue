@@ -1,32 +1,32 @@
 <template>
   <div class="game-window">
     <QuizQuestion
-      :question="quizSet[currentQ]?.question || 'loading'"
-      :currentQ="currentQ"
+      :question="quizSet[currentQuestion]?.question || 'loading'"
+      :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="quizSet[currentQ]?.correctAnswer || 'loading'"
+      :option="quizSet[currentQuestion]?.scrambledChoices[0] || 'loading'"
       :optionName="'A'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.A"
       :tailText="tailText.A"
     />
     <QuizChoice
-      :option="quizSet[currentQ]?.incorrectAnswers[0] || 'loading'"
+      :option="quizSet[currentQuestion]?.scrambledChoices[1] || 'loading'"
       :optionName="'B'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.B"
       :tailText="tailText.B"
     />
     <QuizChoice
-      :option="quizSet[currentQ]?.incorrectAnswers[1] || 'loading'"
+      :option="quizSet[currentQuestion]?.scrambledChoices[2] || 'loading'"
       :optionName="'C'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.C"
       :tailText="tailText.C"
     />
     <QuizChoice
-      :option="quizSet[currentQ]?.incorrectAnswers[2] || 'loading'"
+      :option="quizSet[currentQuestion]?.scrambledChoices[3] || 'loading'"
       :optionName="'D'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.D"
@@ -41,6 +41,7 @@
 <script>
 import QuizQuestion from "../components/QuizQuestion.vue";
 import QuizChoice from "../components/QuizChoice.vue";
+import { _ } from "vue-underscore";
 
 import { api } from "../helpers/helpers";
 
@@ -49,10 +50,10 @@ export default {
   data() {
     return {
       quizSet: [],
-      currentQ: 0,
+      // currentQ: this.currentQuestion || -1,
       thisRoundSelected: "",
       thisRoundPlayed: false,
-      thisRoundCorrect: "A",
+      thisRoundCorrect: null,
       optionClass: {
         A: "",
         B: "",
@@ -74,9 +75,10 @@ export default {
       this.thisRoundPlayed = true;
     },
     nextQuestion() {
-      if (this.currentQ === 4) return;
+      if (this.currentQuestion === 4) return;
       this.tailText[this.thisRoundSelected] = null;
-      this.currentQ++;
+      this.$emit("changeCurrentQ", this.currentQuestion + 1);
+      this.$emit("gameState", 3);
       this.thisRoundSelected = "";
       this.thisRoundPlayed = false;
       this.optionClass.A = "";
@@ -124,10 +126,28 @@ export default {
       this.calculateClass("D", this.thisRoundCorrect, this.thisRoundSelected);
       this.calculateScore(this.thisRoundSelected);
     },
-    currentQ: function () {
-      this.$root.$emit("stepping", this.currentQ);
+    currentQuestion: function () {
+      this.$root.$emit("stepping", this.currentQuestion);
+      this.thisRoundCorrect = this.quizSet[this.currentQuestion].correctLetter;
+    },
+    quizSet: function () {
+      for (let i = 0; i < this.quizSet.length; i++) {
+        const qS = this.quizSet[i];
+        const scrambledChoices = _.shuffle([
+          ...qS.incorrectAnswers,
+          qS.correctAnswer,
+        ]);
+        const correctLetter = String.fromCharCode(
+          scrambledChoices.indexOf(qS.correctAnswer) + 65
+        );
+        qS.scrambledChoices = scrambledChoices;
+        qS.correctLetter = correctLetter;
+      }
+      this.$emit("changeCurrentQ", this.currentQuestion + 1);
     },
   },
+  props: ["currentQuestion"],
+
   async mounted() {
     this.quizSet = (await api.getQuiz()).quizSet;
   },

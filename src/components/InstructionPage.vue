@@ -29,6 +29,7 @@ export default {
   methods: {
     dismissWindow() {
       this.$emit("showInstructions", false);
+      this.$emit("gameState", 2);
     },
   },
 };

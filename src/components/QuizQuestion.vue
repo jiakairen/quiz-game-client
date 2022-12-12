@@ -1,6 +1,6 @@
 <template>
   <div class="quiz-question">
-    <h2>Q{{ currentQ + 1 }}: {{ question }}</h2>
+    <h2>Q{{ currentQuestion + 1 }}: {{ question }}</h2>
   </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
   data() {
     return {};
   },
-  props: ["question", "currentQ"],
+  props: ["question", "currentQuestion"],
 };
 </script>
 

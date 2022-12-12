@@ -1,6 +1,6 @@
 <template>
   <div class="question-stepper">
-    <p>Q {{ currentQuestion }}/{{ totalQuestion }}</p>
+    <p>Q {{ currentQuestion + 1 }}/{{ totalQuestion }}</p>
   </div>
 </template>
 
@@ -9,13 +9,14 @@ export default {
   name: "QuestionStepper",
   data() {
     return {
-      currentQuestion: 1,
+      // currentQuestion: 1,
       totalQuestion: 5,
     };
   },
-  mounted() {
-    this.$root.$on("stepping", ($event) => (this.currentQuestion = $event + 1));
-  },
+  // mounted() {
+  //   this.$root.$on("stepping", ($event) => (this.currentQuestion = $event + 1));
+  // },
+  props: ["currentQuestion"],
 };
 </script>
 
