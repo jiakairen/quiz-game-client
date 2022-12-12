@@ -1,6 +1,6 @@
 <template>
-  <div class="quiz-choice">
-    <h4>{{ option }}: {{ optionText }}</h4>
+  <div class="quiz-choice" @click="optionSelected">
+    <h4>{{ optionName }}: {{ option }}</h4>
   </div>
 </template>
 
@@ -8,11 +8,14 @@
 export default {
   name: "QuizChoice",
   data() {
-    return {
-      option: "A",
-      optionText: "It is ...",
-    };
+    return {};
   },
+  methods: {
+    optionSelected() {
+      this.$emit("optionSelected", this.optionName);
+    },
+  },
+  props: ["option", "optionName"],
 };
 </script>
 
@@ -26,6 +29,6 @@ export default {
 }
 
 .quiz-choice:hover {
-  color: red;
+  text-decoration: underline;
 }
 </style>
