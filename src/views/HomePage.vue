@@ -64,6 +64,7 @@ import TotalScore from "../components/TotalScore.vue";
 const objTemplate = {
   currentGame: {
     id: null,
+    utcDate: null,
     selections: ["", "", "", "", ""],
     correct: ["", "", "", "", ""],
     time: [null, null, null, null, null],
@@ -72,12 +73,14 @@ const objTemplate = {
     score: 0,
   },
   stats: {
+    latestStatsGameID: null,
     lastGameID: null,
     weekWin: [0, 0, 0, 0, 0, 0, 0],
     weekTime: [0, 0, 0, 0, 0, 0],
     weekPoints: [0, 0, 0, 0, 0, 0, 0],
     totCorrect: 0,
     totQuestions: 0,
+    totTime: 0,
     currentStreak: 0,
     maxStreak: 0,
     isOnStreak: false,

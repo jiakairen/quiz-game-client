@@ -5,32 +5,33 @@
       <div class="current-game">
         <h4>Today's Summary</h4>
         <p>Game ID: {{ currentGameStats?.gameID || "loading" }}</p>
-        <p>Date:</p>
+
+        <p>Date: {{ currentGameStats?.date }} (UTC)</p>
+
         <p>
           Total Score:
           <span class="large-text">
             {{ currentGameStats?.score }}
           </span>
-          {{
-            "/ 500" + ` (${Math.round((currentGameStats?.score / 500) * 100)}%)`
-          }}
+          / 500 ({{ Math.round((currentGameStats?.score / 500) * 100) }}%)
         </p>
+
         <p>
-          Average Time Per Question:
+          Avg. Time Per Question:
           <span class="large-text">
-            {{ currentGameStats?.aveTime.toFixed(1) + "s" || "loading" }}
+            {{ currentGameStats?.aveTime.toFixed(1) }}
           </span>
+          s
         </p>
+
         <p>
           Total Correct:
           <span class="large-text">
             {{ currentGameStats?.correctTot }}
           </span>
-          {{
-            "/ 5" + ` (${(currentGameStats?.correctTot / 5) * 100}%)` ||
-            "loading"
-          }}
+          / 5 ({{ (currentGameStats?.correctTot / 5) * 100 }}%)
         </p>
+
         <div class="question-boxes">
           <div v-for="(b, i) in boxes" :key="i" class="box">{{ b }}</div>
           <div class="view-questions-div">
@@ -40,15 +41,81 @@
       </div>
       <div class="past-stats">
         <h4>Past Statistics</h4>
-        <p>Total Question:</p>
-        <p>Total Correct:</p>
-        <p>Total Incorrect:</p>
-        <p>Total Score:</p>
-        <p>Average Score Per Day:</p>
-        <p>Average Time Per Question:</p>
-        <p>Average Correct:</p>
-        <p>Current Streak: days</p>
-        <p>Max Streak: days</p>
+
+        <p>
+          Total Questions Answered:
+          <span class="large-text">
+            {{ pastStats?.totalQuestionsAnswered }}
+          </span>
+        </p>
+
+        <p>
+          Total Correct Answers:
+          <span class="large-text">
+            {{ pastStats?.totalCorrectAnswers }}
+          </span>
+          ({{ pastStats?.totalCorrectPerc }}%)
+        </p>
+
+        <p>
+          Total Incorrect Answers:
+          <span class="large-text">
+            {{ pastStats?.totalIncorrectAnswers }}
+          </span>
+          ({{ pastStats?.totalIncorrectPerc }}%)
+        </p>
+
+        <p>
+          Total Score Earned:
+          <span class="large-text">
+            {{ pastStats?.totalScoreEarned }}
+          </span>
+          /
+          {{ pastStats?.totalScoreAvailable }} ({{
+            pastStats?.totalScorePerc
+          }}%)
+        </p>
+
+        <p>
+          Avg. Score Per Day:
+          <span class="large-text">
+            {{ pastStats?.avgScorePerDay }}
+          </span>
+          / 500 ({{ pastStats?.totalScorePerc }}%)
+        </p>
+
+        <p>
+          Avg. Correct Per Day:
+          <span class="large-text">
+            {{ pastStats?.aveCorrect }}
+          </span>
+          / 5 ({{ pastStats?.aveCorrectPerc }}%)
+        </p>
+
+        <p>
+          Avg. Time Per Question:
+          <span class="large-text">
+            {{ pastStats?.aveTimePerQuestion }}
+          </span>
+          s
+        </p>
+
+        <p>
+          Current Streak:
+          <span class="large-text">
+            {{ pastStats?.currentStreak }}
+          </span>
+          day<span v-if="pastStats?.currentStreak !== 1">s</span>
+        </p>
+
+        <p>
+          Maximum Streak:
+          <span class="large-text">
+            {{ pastStats?.maxStreak }}
+          </span>
+          day<span v-if="pastStats?.maxStreak !== 1">s</span>
+        </p>
+
         <div class="view-charts-div"><p>View Charts</p></div>
       </div>
     </div>
@@ -62,6 +129,7 @@ export default {
     return {
       ls: null,
       currentGameStats: null,
+      pastStats: null,
       boxes: null,
     };
   },
@@ -73,6 +141,7 @@ export default {
       const selections = ls.selections;
       const correct = ls.correct;
       const time = ls.time;
+      const date = ls.utcDate;
 
       const correctBin = new Array(selections.length).fill(null).map((e, i) => {
         return selections[i] === correct[i] && correct[i] !== "" ? 1 : 0;
@@ -80,7 +149,8 @@ export default {
       const correctTot = correctBin.reduce((a, b) => a + b);
 
       const timeArray = time.map((t) => (t === null ? 30 : t));
-      const aveTime = timeArray.reduce((a, b) => a + b) / timeArray.length;
+      const totTimeThisRound = timeArray.reduce((a, b) => a + b);
+      const aveTime = totTimeThisRound / timeArray.length;
 
       this.currentGameStats = {
         gameID: gameID,
@@ -88,6 +158,50 @@ export default {
         correctTot: correctTot,
         score: score,
         aveTime: aveTime,
+        date: date,
+        totTimeThisRound: totTimeThisRound,
+      };
+    },
+    calcPastStats() {
+      const ls = this.ls.stats;
+      let latestStatsGameID = ls.latestStatsGameID;
+      if (latestStatsGameID !== this.ls.currentGame.id) {
+        if (ls.latestStatsGameID === this.ls.currentGame.id - 1) {
+          ls.isOnStreak = true;
+          ls.currentStreak += 1;
+          console.log(ls.currentStreak, ls.maxStreak);
+        } else {
+          ls.isOnStreak = false;
+          ls.currentStreak = 1;
+        }
+        if (ls.currentStreak >= ls.maxStreak) {
+          ls.maxStreak = ls.currentStreak;
+        }
+        ls.totQuestions += 5;
+        ls.totCorrect += this.currentGameStats.correctTot;
+        ls.totPoints += this.currentGameStats.score;
+        ls.latestStatsGameID = this.ls.currentGame.id;
+        ls.totTime += this.currentGameStats.totTimeThisRound;
+        localStorage.dailyQuiz = JSON.stringify(this.ls);
+      }
+
+      this.pastStats = {
+        totalQuestionsAnswered: ls.totQuestions,
+        totalCorrectAnswers: ls.totCorrect,
+        totalCorrectPerc: Math.round((ls.totCorrect / ls.totQuestions) * 100),
+        totalIncorrectAnswers: ls.totQuestions - ls.totCorrect,
+        totalIncorrectPerc: Math.round(
+          ((ls.totQuestions - ls.totCorrect) / ls.totQuestions) * 100
+        ),
+        totalScoreEarned: ls.totPoints,
+        totalScoreAvailable: ls.totQuestions * 100,
+        totalScorePerc: Math.round(ls.totPoints / ls.totQuestions),
+        avgScorePerDay: (ls.totPoints / ls.totQuestions) * 5,
+        aveTimePerQuestion: ls.totTime / ls.totQuestions,
+        aveCorrect: (ls.totCorrect / ls.totQuestions) * 5,
+        aveCorrectPerc: Math.round((ls.totCorrect / ls.totQuestions) * 100),
+        currentStreak: ls.currentStreak,
+        maxStreak: ls.maxStreak,
       };
     },
     makeBoxes() {
@@ -109,7 +223,9 @@ export default {
     ls: function () {
       this.calcCurrentGameStats();
       this.boxes = this.makeBoxes();
+      this.calcPastStats();
     },
+    currentGameStats: function () {},
   },
   props: ["lsObj"],
 };

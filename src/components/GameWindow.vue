@@ -222,6 +222,8 @@ export default {
     this.quizSet = response.quizSet;
     this.ls = this.lsObj;
     this.ls.currentGame.id = response.id;
+    const dateToday = new Date();
+    this.ls.currentGame.utcDate = `${dateToday.getUTCDate()}/${dateToday.getUTCMonth()}/${dateToday.getUTCFullYear()}`;
 
     if (this.ls.currentGame.score > 0) {
       this.$emit("updateTotalScore", this.ls.currentGame.score);
