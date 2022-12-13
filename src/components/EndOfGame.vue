@@ -3,8 +3,9 @@
     <h2>End of Game Summary</h2>
     <div class="current-past">
       <div class="current-game">
-        <h4>Today's summary</h4>
+        <h4>Today's Summary</h4>
         <p>Game ID: {{ currentGameStats?.gameID || "loading" }}</p>
+        <p>Date:</p>
         <p>
           Total Score:
           <span class="large-text">
@@ -31,11 +32,24 @@
           }}
         </p>
         <div class="question-boxes">
-          <div v-for="(b, i) in boxes" :key="i">{{ b }}</div>
+          <div v-for="(b, i) in boxes" :key="i" class="box">{{ b }}</div>
+          <div class="view-questions-div">
+            <p>View Questions</p>
+          </div>
         </div>
       </div>
       <div class="past-stats">
         <h4>Past Statistics</h4>
+        <p>Total Question:</p>
+        <p>Total Correct:</p>
+        <p>Total Incorrect:</p>
+        <p>Total Score:</p>
+        <p>Average Score Per Day:</p>
+        <p>Average Time Per Question:</p>
+        <p>Average Correct:</p>
+        <p>Current Streak: days</p>
+        <p>Max Streak: days</p>
+        <div class="view-charts-div"><p>View Charts</p></div>
       </div>
     </div>
   </div>
@@ -117,27 +131,96 @@ h2 {
   display: flex;
 }
 .current-game {
-  margin: 10px;
-  padding: 10px;
+  margin: 10px 0 10px 0;
+  padding: 10px 20px 10px 20px;
   border-right: 1px solid black;
   width: 38.2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .past-stats {
   margin: 10px;
   padding: 10px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.current-game p,
+.past-stats p {
+  margin: 5px 0;
 }
 
 .question-boxes {
   display: flex;
-  width: 100px;
-  justify-content: space-around;
+  justify-content: space-between;
+  border: 1px solid black;
+  padding-left: 15px;
+  border-radius: 1.5em;
+  overflow: hidden;
+}
+
+.box {
+  display: flex;
+  align-items: center;
 }
 
 .large-text {
   font-weight: bold;
   font-size: 150%;
 }
+
+.view-questions-div {
+  border-left: 1px solid black;
+  padding-left: 10px;
+  transition: 0.2s all;
+}
+.view-questions-div p {
+  margin: 5px 10px 5px 0;
+}
+.view-questions-div:hover {
+  background-color: black;
+  color: white;
+}
+
+.view-charts-div {
+  border: 1px solid black;
+  border-radius: 1.5em;
+  transition: 0.2s all;
+  width: 100%;
+}
+.view-charts-div p {
+  margin: 5px;
+  text-align: center;
+}
+.view-charts-div:hover {
+  background-color: black;
+  color: white;
+}
+/* @media (max-width: 760px) {
+  .question-boxes {
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0px;
+    padding-top: 10px;
+  }
+  .view-questions-div {
+    border-left: 0px;
+    border-top: 1px solid black;
+    padding-left: 0px;
+  }
+  .view-questions-div p {
+    margin: 10px;
+    text-align: center;
+  }
+} */
+/* .button-enabled:hover {
+  color: white;
+  background-color: black;
+} */
 
 /* .q-box {
   width: 25px;
