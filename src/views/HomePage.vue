@@ -6,13 +6,21 @@
           v-if="gameState === 3 || gameState === 4"
           :totalScore="totalScore"
         />
-        <CountdownClock v-if="gameState === 4" :stopTimer="stopTimer" />
+        <CountdownClock
+          v-if="gameState === 4"
+          :stopTimer="stopTimer"
+          @timeOut="timeOut = $event"
+        />
         <QuestionStepper
           v-if="gameState === 3 || gameState === 4"
           :currentQuestion="currentQuestion"
         />
       </div>
-      <StartButton v-if="gameState === 2" @gameState="gameState = $event" />
+      <StartButton
+        v-if="gameState === 2"
+        @gameState="gameState = $event"
+        :startButtonMessage="startButtonMessage"
+      />
       <GameWindow
         v-if="gameState === 3 || gameState === 4"
         @gameState="gameState = $event"
@@ -20,6 +28,8 @@
         @changeCurrentQ="currentQuestion = $event"
         @changeTimerStatus="stopTimer = $event"
         @updateTotalScore="totalScore = $event"
+        :timeOut="timeOut"
+        :lsObj="lsObj"
       />
     </div>
     <ThreeTwoOne
@@ -32,7 +42,7 @@
       v-if="showInstructions && gameState === 1"
       class="instruction-popup"
       @showInstructions="showInstructions = $event"
-      @gameState="gameState = $event"
+      @gameState="dismissInstructions($event)"
     />
     <EndOfGame v-if="gameState === 5" />
     <!-- <NextRound /> -->
@@ -51,6 +61,31 @@ import TotalScore from "../components/TotalScore.vue";
 
 // import NextRound from "../components/NextRound.vue";
 
+const objTemplate = {
+  currentGame: {
+    id: null,
+    selections: ["", "", "", "", ""],
+    correct: ["", "", "", "", ""],
+    time: [null, null, null, null, null],
+    currentQuestion: null,
+    gameState: null,
+    score: 0,
+  },
+  stats: {
+    lastGameID: null,
+    weekWin: [0, 0, 0, 0, 0, 0, 0],
+    weekTime: [0, 0, 0, 0, 0, 0],
+    weekPoints: [0, 0, 0, 0, 0, 0, 0],
+    totCorrect: 0,
+    totQuestions: 0,
+    currentStreak: 0,
+    maxStreak: 0,
+    isOnStreak: false,
+    totPoints: 0,
+    hasPlayed: false,
+  },
+};
+
 export default {
   name: "homePage",
   data() {
@@ -62,6 +97,9 @@ export default {
       currentQuestion: -1,
       stopTimer: false,
       totalScore: null,
+      timeOut: false,
+      lsObj: null,
+      startButtonMessage: "",
     };
   },
   methods: {
@@ -72,6 +110,11 @@ export default {
         this.gameClass = "";
       }
       return;
+    },
+    dismissInstructions(e) {
+      this.gameState = e;
+      this.lsObj.stats.hasPlayed = true;
+      localStorage.dailyQuiz = JSON.stringify(this.lsObj);
     },
   },
   components: {
@@ -93,12 +136,49 @@ export default {
     // },
     gameState: function () {
       this.generateGameClass();
+      this.timeOut = false;
+      this.lsObj.currentGame.gameState = this.gameState;
+      localStorage.dailyQuiz = JSON.stringify(this.lsObj);
     },
   },
   mounted() {
     this.generateGameClass();
-    this.gameState = 2;
+    this.gameState = 1;
     this.$root.$on("stepping", ($event) => (this.currentQuestion = $event));
+    if (localStorage.dailyQuiz) {
+      const obj = JSON.parse(localStorage.dailyQuiz);
+      this.lsObj = obj;
+
+      const hasPlayed = obj.stats.hasPlayed;
+      const gameState = obj.currentGame.gameState;
+      const currentQ = obj.currentGame.currentQuestion;
+      const lsID = obj.currentGame.id;
+      if (lsID === Math.floor(new Date().getTime() / 86400000)) {
+        if (hasPlayed) {
+          this.gameState = 2;
+        }
+        if (gameState) {
+          if (gameState === 4) {
+            this.gameState = 2;
+          } else {
+            this.gameState = gameState;
+          }
+        }
+
+        if (currentQ === 4) {
+          this.gameState = 5;
+        } else if (currentQ >= 0) {
+          this.startButtonMessage = `Next: Question ${currentQ + 2}`;
+          this.currentQuestion = currentQ;
+        }
+      } else {
+        this.lsObj.currentGame = objTemplate.currentGame;
+      }
+    } else {
+      this.lsObj = objTemplate;
+      const myJSON = JSON.stringify(objTemplate);
+      localStorage.setItem("dailyQuiz", myJSON);
+    }
   },
 };
 </script>

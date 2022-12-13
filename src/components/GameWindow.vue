@@ -68,6 +68,7 @@ export default {
         C: null,
         D: null,
       },
+      ls: null,
     };
   },
   methods: {
@@ -82,6 +83,7 @@ export default {
         return;
       }
       this.tailText[this.thisRoundSelected] = null;
+      this.tailText[this.thisRoundCorrect] = null;
       this.$emit("changeCurrentQ", this.currentQuestion + 1);
       this.$emit("gameState", 3);
       this.thisRoundSelected = "";
@@ -113,11 +115,13 @@ export default {
       this.$root.$on("timerStopped", ($event) => {
         if (this.thisRoundSelected === this.thisRoundCorrect) {
           this.thisRoundScore = 100 - (30 - $event) * 3;
-          return;
         } else {
           this.thisRoundScore = 0;
           this.tailText[this.thisRoundSelected] = "+0 points";
         }
+        this.ls.currentGame.time[this.currentQuestion] = 30 - $event;
+        localStorage.dailyQuiz = JSON.stringify(this.ls);
+        return;
       });
       // if (this.thisRoundSelected === this.thisRoundCorrect) {
       //   console.log("correct, calculating score");
@@ -149,12 +153,21 @@ export default {
       this.calculateClass("D", this.thisRoundCorrect, this.thisRoundSelected);
       this.calculateScore();
       this.$emit("changeTimerStatus", true);
+      this.ls.currentGame.selections[this.currentQuestion] =
+        this.quizSet[this.currentQuestion].scrambledChoices[
+          this.thisRoundSelected.charCodeAt(0) - 65
+        ] || "TIMEOUT";
+      this.ls.currentGame.correct[this.currentQuestion] =
+        this.quizSet[this.currentQuestion].correctAnswer;
+      localStorage.dailyQuiz = JSON.stringify(this.ls);
     },
     currentQuestion: function () {
       this.$root.$emit("stepping", this.currentQuestion);
       this.thisRoundCorrect = this.quizSet[this.currentQuestion].correctLetter;
       this.$emit("changeTimerStatus", false);
       this.thisRoundScore = null;
+      this.ls.currentGame.currentQuestion = this.currentQuestion;
+      localStorage.dailyQuiz = JSON.stringify(this.ls);
     },
     quizSet: function () {
       for (let i = 0; i < this.quizSet.length; i++) {
@@ -177,12 +190,32 @@ export default {
     },
     totalScore: function () {
       this.$emit("updateTotalScore", this.totalScore);
+      this.ls.currentGame.score = this.totalScore;
+      localStorage.dailyQuiz = JSON.stringify(this.ls);
     },
+    timeOut: function () {
+      if (this.timeOut) {
+        this.thisRoundPlayed = true;
+        this.tailText[this.thisRoundCorrect] = `TIME OUT: +0 points`;
+      }
+    },
+    // lsObj: function () {
+    //   this.ls = this.lsObj;
+    // },
   },
-  props: ["currentQuestion"],
+  props: ["currentQuestion", "timeOut", "lsObj"],
 
   async mounted() {
-    this.quizSet = (await api.getQuiz()).quizSet;
+    const response = await api.getQuiz();
+    console.log(response);
+    this.quizSet = response.quizSet;
+    this.ls = this.lsObj;
+    this.ls.currentGame.id = response.id;
+
+    if (this.ls.currentGame.score > 0) {
+      this.$emit("updateTotalScore", this.ls.currentGame.score);
+      this.totalScore = this.ls.currentGame.score;
+    }
   },
 };
 </script>
@@ -203,7 +236,6 @@ export default {
   background-color: green;
   color: white;
 }
-
 .correct:hover {
   color: white;
 }

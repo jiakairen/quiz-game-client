@@ -1,7 +1,16 @@
 <template>
   <div class="start-div">
-    <button @click="startGame" class="start-button">START</button>
+    <h2>Daily Quiz</h2>
+    <button
+      ref="startButtonRef"
+      @click="startGame"
+      @keydown.space="startGame"
+      class="start-button"
+    >
+      START
+    </button>
     <p>Or hit [space]</p>
+    <p>{{ startButtonMessage || "" }}</p>
   </div>
 </template>
 
@@ -12,6 +21,10 @@ export default {
     startGame() {
       this.$emit("gameState", 3);
     },
+  },
+  props: ["startButtonMessage"],
+  mounted() {
+    this.$refs.startButtonRef.focus();
   },
 };
 </script>
@@ -35,6 +48,9 @@ export default {
 }
 .start-button:hover {
   font-size: 120%;
+}
+.start-button:focus {
+  outline: none;
 }
 
 .start-button:active {

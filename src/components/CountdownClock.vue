@@ -9,7 +9,7 @@ export default {
   name: "CoundownClock",
   data() {
     return {
-      seconds: 30,
+      seconds: 10,
       intervalID: null,
     };
   },
@@ -33,6 +33,9 @@ export default {
         clearInterval(this.intervalID);
         this.intervalID = null;
         this.$root.$emit("timerStopped", this.seconds);
+        if (this.seconds === 0) {
+          this.$emit("timeOut", true);
+        }
       }
       return;
     },
