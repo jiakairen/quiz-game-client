@@ -33,7 +33,7 @@
       :tailText="tailText.D"
     />
     <div class="game-controls">
-      <button @click="nextQuestion">Next Question</button>
+      <button @click="nextQuestion" :class="buttonClass">NEXT</button>
     </div>
   </div>
 </template>
@@ -69,6 +69,7 @@ export default {
         D: null,
       },
       ls: null,
+      buttonClass: "",
     };
   },
   methods: {
@@ -80,6 +81,9 @@ export default {
     nextQuestion() {
       if (this.currentQuestion === 4) {
         this.$emit("gameState", 5);
+        return;
+      }
+      if (!this.thisRoundPlayed) {
         return;
       }
       this.tailText[this.thisRoundSelected] = null;
@@ -109,6 +113,13 @@ export default {
         this.thisRoundPlayed
       ) {
         this.optionClass[optionName] = "unselected";
+      }
+    },
+    calculateButtonClass() {
+      if (this.thisRoundPlayed) {
+        this.buttonClass = "button-enabled";
+      } else {
+        this.buttonClass = "button-disabled";
       }
     },
     calculateScore() {
@@ -160,6 +171,7 @@ export default {
       this.ls.currentGame.correct[this.currentQuestion] =
         this.quizSet[this.currentQuestion].correctAnswer;
       localStorage.dailyQuiz = JSON.stringify(this.ls);
+      this.calculateButtonClass();
     },
     currentQuestion: function () {
       this.$root.$emit("stepping", this.currentQuestion);
@@ -207,7 +219,6 @@ export default {
 
   async mounted() {
     const response = await api.getQuiz();
-    console.log(response);
     this.quizSet = response.quizSet;
     this.ls = this.lsObj;
     this.ls.currentGame.id = response.id;
@@ -216,6 +227,7 @@ export default {
       this.$emit("updateTotalScore", this.ls.currentGame.score);
       this.totalScore = this.ls.currentGame.score;
     }
+    this.calculateButtonClass();
   },
 };
 </script>
@@ -250,5 +262,27 @@ export default {
 
 .unselected {
   opacity: 0.4;
+}
+
+.button-enabled {
+  width: 100px;
+  height: 30px;
+  border: 1px solid black;
+  background-color: white;
+  border-radius: 1em;
+}
+.button-enabled:hover {
+  color: white;
+  background-color: black;
+}
+
+.button-disabled {
+  width: 100px;
+  height: 30px;
+  border: 1px solid gray;
+  background-color: white;
+  border-radius: 1em;
+  color: gray;
+  pointer-events: none;
 }
 </style>

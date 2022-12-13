@@ -9,7 +9,7 @@ export default {
   name: "CoundownClock",
   data() {
     return {
-      seconds: 10,
+      seconds: 30,
       intervalID: null,
     };
   },

@@ -9,8 +9,12 @@
     >
       START
     </button>
-    <p>Or hit [space]</p>
-    <p>{{ startButtonMessage || "" }}</p>
+    <p>
+      {{
+        startButtonMessage ||
+        "Welcome to your new daily quiz! Press START to start."
+      }}
+    </p>
   </div>
 </template>
 
@@ -31,7 +35,7 @@ export default {
 
 <style scoped>
 .start-div {
-  width: 200px;
+  width: 250px;
   height: 200px;
   margin: 0 auto;
   text-align: center;

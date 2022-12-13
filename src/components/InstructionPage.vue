@@ -19,10 +19,12 @@ export default {
     return {
       title: "How to play?",
       instructions: [
-        "Press Start or [Enter] to start the game.",
-        "Use your mouse or [A/1], [B/2], [C/3], [D/4] to choose an answer.",
+        "Press Start to start the game.",
+        "There are 5 questions per day.",
+        "Use your mouse to choose an answer. Press NEXT to go to next question.",
         "You have 30 seconds for each question, the faster you answer, the more points you gain.",
         "No points for incorrect answer or no answer.",
+        "If you've already started a question, please DO NOT refresh the page or close the browser as you will not be able to return that question.",
       ],
     };
   },

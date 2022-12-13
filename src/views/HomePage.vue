@@ -44,7 +44,7 @@
       @showInstructions="showInstructions = $event"
       @gameState="dismissInstructions($event)"
     />
-    <EndOfGame v-if="gameState === 5" />
+    <EndOfGame v-if="gameState === 5" :lsObj="lsObj" />
     <!-- <NextRound /> -->
   </div>
 </template>
@@ -153,10 +153,8 @@ export default {
       const gameState = obj.currentGame.gameState;
       const currentQ = obj.currentGame.currentQuestion;
       const lsID = obj.currentGame.id;
+
       if (lsID === Math.floor(new Date().getTime() / 86400000)) {
-        if (hasPlayed) {
-          this.gameState = 2;
-        }
         if (gameState) {
           if (gameState === 4) {
             this.gameState = 2;
@@ -172,6 +170,9 @@ export default {
           this.currentQuestion = currentQ;
         }
       } else {
+        if (hasPlayed) {
+          this.gameState = 2;
+        }
         this.lsObj.currentGame = objTemplate.currentGame;
       }
     } else {
