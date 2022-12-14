@@ -1,41 +1,55 @@
 <template>
   <div class="end-of-game-summary">
-    <h2>End of Game Summary</h2>
+    <h2>You've completed today's quiz!</h2>
     <div class="current-past">
       <div class="current-game">
-        <h4>Today's Summary</h4>
-        <p>Game ID: {{ currentGameStats?.gameID || "loading" }}</p>
+        <div class="next-game">
+          <h4>Next Game In:</h4>
+          <p>
+            {{
+              (countdownHH || "--") +
+              " : " +
+              (countdownMM || "--") +
+              " : " +
+              (countdownSS || "--")
+            }}
+          </p>
+        </div>
+        <div class="todays-summary">
+          <h4>Today's Summary</h4>
+          <p>Game ID: {{ currentGameStats?.gameID || "loading" }}</p>
 
-        <p>Date: {{ currentGameStats?.date }} (UTC)</p>
+          <p>Date: {{ currentGameStats?.date }} (UTC)</p>
 
-        <p>
-          Total Score:
-          <span class="large-text">
-            {{ currentGameStats?.score }}
-          </span>
-          / 500 ({{ Math.round((currentGameStats?.score / 500) * 100) }}%)
-        </p>
+          <p>
+            Total Score:
+            <span class="large-text">
+              {{ currentGameStats?.score }}
+            </span>
+            / 500 ({{ Math.round((currentGameStats?.score / 500) * 100) }}%)
+          </p>
 
-        <p>
-          Avg. Time Per Question:
-          <span class="large-text">
-            {{ currentGameStats?.aveTime.toFixed(1) }}
-          </span>
-          s
-        </p>
+          <p>
+            Avg. Time Per Question:
+            <span class="large-text">
+              {{ currentGameStats?.aveTime.toFixed(1) }}
+            </span>
+            s
+          </p>
 
-        <p>
-          Total Correct:
-          <span class="large-text">
-            {{ currentGameStats?.correctTot }}
-          </span>
-          / 5 ({{ (currentGameStats?.correctTot / 5) * 100 }}%)
-        </p>
+          <p>
+            Total Correct:
+            <span class="large-text">
+              {{ currentGameStats?.correctTot }}
+            </span>
+            / 5 ({{ (currentGameStats?.correctTot / 5) * 100 }}%)
+          </p>
 
-        <div class="question-boxes">
-          <div v-for="(b, i) in boxes" :key="i" class="box">{{ b }}</div>
-          <div class="view-questions-div">
-            <p>View Questions</p>
+          <div class="question-boxes">
+            <div v-for="(b, i) in boxes" :key="i" class="box">{{ b }}</div>
+            <div class="view-questions-div">
+              <p>View Questions</p>
+            </div>
           </div>
         </div>
       </div>
@@ -131,6 +145,9 @@ export default {
       currentGameStats: null,
       pastStats: null,
       boxes: null,
+      countdownHH: null,
+      countdownMM: null,
+      countdownSS: null,
     };
   },
   methods: {
@@ -215,9 +232,22 @@ export default {
         return "🔴";
       });
     },
+    calculateCountDown() {
+      const remaining = (1 - ((new Date().getTime() / 86400000) % 1)) * 24;
+      this.countdownHH = Math.floor(remaining).toString().padStart(2, "0");
+      this.countdownMM = Math.floor((remaining * 60) % 60)
+        .toString()
+        .padStart(2, "0");
+      this.countdownSS = Math.floor((remaining * 3600) % 60)
+        .toString()
+        .padStart(2, "0");
+    },
   },
   mounted() {
     this.ls = this.lsObj;
+    setInterval(() => {
+      this.calculateCountDown();
+    }, 1000);
   },
   watch: {
     ls: function () {
@@ -246,6 +276,10 @@ h2 {
 .current-past {
   display: flex;
 }
+.next-game {
+  border-bottom: 1px solid black;
+  padding-bottom: 15px;
+}
 .current-game {
   margin: 10px 0 10px 0;
   padding: 10px 20px 10px 20px;
@@ -254,6 +288,13 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.todays-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .past-stats {
