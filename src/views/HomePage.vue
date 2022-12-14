@@ -44,7 +44,11 @@
       @showInstructions="showInstructions = $event"
       @gameState="dismissInstructions($event)"
     />
-    <EndOfGame v-if="gameState === 5" :lsObj="lsObj" />
+    <EndOfGame
+      v-if="gameState === 5"
+      :lsObj="lsObj"
+      @gameState="gameState = $event"
+    />
   </div>
 </template>
 

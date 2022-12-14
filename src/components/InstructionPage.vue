@@ -20,7 +20,7 @@ export default {
       title: "Daily Quiz Rules",
       instructions: [
         "Press START to start the game.",
-        "There are 5 questions per day.",
+        "There are 5 questions per day. Questions refresh at midnight (UTC) or 10 / 11am (AEST / AEDT) everyday.",
         "Use your mouse to choose an answer. Press NEXT to go to the next question.",
         "You have 30 seconds for each question, the faster you answer, the more points you gain.",
         "No points given for incorrect answer or no answer.",

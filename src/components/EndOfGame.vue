@@ -1,142 +1,167 @@
 <template>
-  <div class="end-of-game-summary">
-    <h2>You've completed today's quiz!</h2>
-    <div class="current-past">
-      <div class="current-game">
-        <div class="next-game">
-          <h4>Next Game In</h4>
-          <p>
-            {{
-              (countdownHH || "--") +
-              " : " +
-              (countdownMM || "--") +
-              " : " +
-              (countdownSS || "--")
-            }}
-          </p>
+  <div>
+    <div class="end-of-game-summary" :class="summaryClass">
+      <h2>You've completed today's quiz!</h2>
+      <div class="current-past">
+        <div class="current-game">
+          <div class="next-game">
+            <h4>Next Game In</h4>
+            <p>
+              {{
+                (countdownHH || "--") +
+                " : " +
+                (countdownMM || "--") +
+                " : " +
+                (countdownSS || "--")
+              }}
+            </p>
+            <div
+              class="view-charts-div"
+              @click="playNewQuiz"
+              v-if="newGameReady"
+            >
+              <p>PLAY NEW QUIZ</p>
+            </div>
+          </div>
+          <div class="todays-summary">
+            <h4>Today's Summary</h4>
+            <p>Game ID: {{ currentGameStats?.gameID || "loading" }}</p>
+
+            <p>Date: {{ currentGameStats?.date }} (UTC)</p>
+
+            <p>
+              Total Score:
+              <span class="large-text">
+                {{ currentGameStats?.score }}
+              </span>
+              / 500 ({{ Math.round((currentGameStats?.score / 500) * 100) }}%)
+            </p>
+
+            <p>
+              Avg. Time Per Question:
+              <span class="large-text">
+                {{ currentGameStats?.aveTime.toFixed(1) }}
+              </span>
+              s
+            </p>
+
+            <p>
+              Total Correct:
+              <span class="large-text">
+                {{ currentGameStats?.correctTot }}
+              </span>
+              / 5 ({{ (currentGameStats?.correctTot / 5) * 100 }}%)
+            </p>
+
+            <div class="question-boxes">
+              <div v-for="(b, i) in boxes" :key="i" class="box">{{ b }}</div>
+              <div class="view-questions-div" @click="showReview = true">
+                <p>REVIEW</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="todays-summary">
-          <h4>Today's Summary</h4>
-          <p>Game ID: {{ currentGameStats?.gameID || "loading" }}</p>
-
-          <p>Date: {{ currentGameStats?.date }} (UTC)</p>
+        <div class="past-stats">
+          <h4>Past Statistics</h4>
 
           <p>
-            Total Score:
+            Total Questions Answered:
             <span class="large-text">
-              {{ currentGameStats?.score }}
+              {{ pastStats?.totalQuestionsAnswered }}
             </span>
-            / 500 ({{ Math.round((currentGameStats?.score / 500) * 100) }}%)
+          </p>
+
+          <p>
+            Total Correct Answers:
+            <span class="large-text">
+              {{ pastStats?.totalCorrectAnswers }}
+            </span>
+            ({{ pastStats?.totalCorrectPerc }}%)
+          </p>
+
+          <p>
+            Total Incorrect Answers:
+            <span class="large-text">
+              {{ pastStats?.totalIncorrectAnswers }}
+            </span>
+            ({{ pastStats?.totalIncorrectPerc }}%)
+          </p>
+
+          <p>
+            Total Score Earned:
+            <span class="large-text">
+              {{ pastStats?.totalScoreEarned }}
+            </span>
+            /
+            {{ pastStats?.totalScoreAvailable }} ({{
+              pastStats?.totalScorePerc
+            }}%)
+          </p>
+
+          <p>
+            Avg. Score Per Day:
+            <span class="large-text">
+              {{ Math.round(pastStats?.avgScorePerDay) }}
+            </span>
+            / 500 ({{ pastStats?.totalScorePerc }}%)
+          </p>
+
+          <p>
+            Avg. Correct Per Day:
+            <span class="large-text">
+              {{ pastStats?.aveCorrect.toFixed(1) }}
+            </span>
+            / 5 ({{ pastStats?.aveCorrectPerc }}%)
           </p>
 
           <p>
             Avg. Time Per Question:
             <span class="large-text">
-              {{ currentGameStats?.aveTime.toFixed(1) }}
+              {{ pastStats?.aveTimePerQuestion.toFixed(1) }}
             </span>
             s
           </p>
 
           <p>
-            Total Correct:
+            Current Streak:
             <span class="large-text">
-              {{ currentGameStats?.correctTot }}
+              {{ pastStats?.currentStreak }}
             </span>
-            / 5 ({{ (currentGameStats?.correctTot / 5) * 100 }}%)
+            day<span v-if="pastStats?.currentStreak !== 1">s</span>
           </p>
 
-          <div class="question-boxes">
-            <div v-for="(b, i) in boxes" :key="i" class="box">{{ b }}</div>
-            <div class="view-questions-div">
-              <p>View Questions</p>
-            </div>
+          <p>
+            Maximum Streak:
+            <span class="large-text">
+              {{ pastStats?.maxStreak }}
+            </span>
+            day<span v-if="pastStats?.maxStreak !== 1">s</span>
+          </p>
+
+          <div class="view-charts-div" @click="showCharts = true">
+            <p>VIEW CHARTS</p>
           </div>
         </div>
       </div>
-      <div class="past-stats">
-        <h4>Past Statistics</h4>
-
-        <p>
-          Total Questions Answered:
-          <span class="large-text">
-            {{ pastStats?.totalQuestionsAnswered }}
-          </span>
-        </p>
-
-        <p>
-          Total Correct Answers:
-          <span class="large-text">
-            {{ pastStats?.totalCorrectAnswers }}
-          </span>
-          ({{ pastStats?.totalCorrectPerc }}%)
-        </p>
-
-        <p>
-          Total Incorrect Answers:
-          <span class="large-text">
-            {{ pastStats?.totalIncorrectAnswers }}
-          </span>
-          ({{ pastStats?.totalIncorrectPerc }}%)
-        </p>
-
-        <p>
-          Total Score Earned:
-          <span class="large-text">
-            {{ pastStats?.totalScoreEarned }}
-          </span>
-          /
-          {{ pastStats?.totalScoreAvailable }} ({{
-            pastStats?.totalScorePerc
-          }}%)
-        </p>
-
-        <p>
-          Avg. Score Per Day:
-          <span class="large-text">
-            {{ Math.round(pastStats?.avgScorePerDay) }}
-          </span>
-          / 500 ({{ pastStats?.totalScorePerc }}%)
-        </p>
-
-        <p>
-          Avg. Correct Per Day:
-          <span class="large-text">
-            {{ pastStats?.aveCorrect.toFixed(1) }}
-          </span>
-          / 5 ({{ pastStats?.aveCorrectPerc }}%)
-        </p>
-
-        <p>
-          Avg. Time Per Question:
-          <span class="large-text">
-            {{ pastStats?.aveTimePerQuestion.toFixed(1) }}
-          </span>
-          s
-        </p>
-
-        <p>
-          Current Streak:
-          <span class="large-text">
-            {{ pastStats?.currentStreak }}
-          </span>
-          day<span v-if="pastStats?.currentStreak !== 1">s</span>
-        </p>
-
-        <p>
-          Maximum Streak:
-          <span class="large-text">
-            {{ pastStats?.maxStreak }}
-          </span>
-          day<span v-if="pastStats?.maxStreak !== 1">s</span>
-        </p>
-
-        <div class="view-charts-div"><p>View Charts</p></div>
-      </div>
     </div>
+    <ReviewQuestions
+      class="review-questions"
+      v-if="showReview"
+      @showReview="showReview = $event"
+    />
+    <PastCharts
+      class="past-charts"
+      v-if="showCharts"
+      @showCharts="showCharts = $event"
+      :chartsData="pastStats"
+    />
   </div>
 </template>
 
 <script>
+import ReviewQuestions from "./ReviewQuestions.vue";
+import PastCharts from "./PastCharts.vue";
+
 export default {
   name: "EndOfGame",
   data() {
@@ -148,6 +173,10 @@ export default {
       countdownHH: null,
       countdownMM: null,
       countdownSS: null,
+      newGameReady: false,
+      showReview: false,
+      showCharts: false,
+      summaryClass: "",
     };
   },
   methods: {
@@ -199,6 +228,15 @@ export default {
         ls.totPoints += this.currentGameStats.score;
         ls.latestStatsGameID = this.ls.currentGame.id;
         ls.totTime += this.currentGameStats.totTimeThisRound;
+        ls.weekWin = ls.weekWin
+          .slice(1)
+          .concat(this.currentGameStats.correctTot);
+        ls.weekTime = ls.weekTime
+          .slice(1)
+          .concat(this.currentGameStats.aveTime);
+        ls.weekPoints = ls.weekPoints
+          .slice(1)
+          .concat(this.currentGameStats.score);
         localStorage.dailyQuiz = JSON.stringify(this.ls);
       }
 
@@ -219,6 +257,9 @@ export default {
         aveCorrectPerc: Math.round((ls.totCorrect / ls.totQuestions) * 100),
         currentStreak: ls.currentStreak,
         maxStreak: ls.maxStreak,
+        weekWin: ls.weekWin,
+        weekTime: ls.weekTime,
+        weekPoints: ls.weekPoints,
       };
     },
     makeBoxes() {
@@ -242,6 +283,17 @@ export default {
         .toString()
         .padStart(2, "0");
     },
+    playNewQuiz() {
+      this.$emit("gameState", 2);
+    },
+    generateSummaryClass() {
+      if (this.showReview || this.showCharts) {
+        this.summaryClass = "blurred";
+      } else {
+        this.summaryClass = "";
+      }
+      return;
+    },
   },
   mounted() {
     this.ls = this.lsObj;
@@ -256,8 +308,27 @@ export default {
       this.calcPastStats();
     },
     currentGameStats: function () {},
+    countdownMM: function () {
+      if (
+        Math.floor(new Date().getTime() / 86400000) > this.ls.currentGame.id
+      ) {
+        this.newGameReady = true;
+      } else {
+        this.newGameReady = false;
+      }
+    },
+    showReview: function () {
+      this.generateSummaryClass();
+    },
+    showCharts: function () {
+      this.generateSummaryClass();
+    },
   },
   props: ["lsObj"],
+  components: {
+    ReviewQuestions,
+    PastCharts,
+  },
 };
 </script>
 
@@ -335,7 +406,8 @@ h2 {
 
 .view-questions-div {
   border-left: 1px solid #6c6b67;
-  padding-left: 10px;
+  padding-left: 20px;
+  padding-right: 10px;
   transition: 0.2s all;
 }
 .view-questions-div p {
@@ -367,6 +439,18 @@ h2 {
 }
 .view-charts-div:hover > p {
   color: white;
+}
+.review-questions,
+.past-charts {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+.blurred {
+  filter: blur(15px);
+  pointer-events: none;
 }
 @media (max-width: 860px) {
   .current-past {
