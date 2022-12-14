@@ -42,9 +42,11 @@ export default {
 .three-two-one {
   height: 200px;
   width: 200px;
-  border: 1px solid black;
   text-align: center;
   color: black;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 2em;
+  box-shadow: 0 0 10px #565652;
 }
 .three-two-one p {
   font-size: 60px;

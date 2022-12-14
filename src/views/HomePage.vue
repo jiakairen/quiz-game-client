@@ -45,7 +45,6 @@
       @gameState="dismissInstructions($event)"
     />
     <EndOfGame v-if="gameState === 5" :lsObj="lsObj" />
-    <!-- <NextRound /> -->
   </div>
 </template>
 
@@ -58,8 +57,6 @@ import ThreeTwoOne from "../components/ThreeTwoOne.vue";
 import GameWindow from "../components/GameWindow.vue";
 import EndOfGame from "../components/EndOfGame.vue";
 import TotalScore from "../components/TotalScore.vue";
-
-// import NextRound from "../components/NextRound.vue";
 
 const objTemplate = {
   currentGame: {
@@ -200,7 +197,7 @@ export default {
   left: 0;
   right: 0;
   margin: auto;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 .blurred {
   filter: blur(15px);

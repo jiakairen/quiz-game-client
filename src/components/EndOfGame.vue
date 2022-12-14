@@ -263,12 +263,13 @@ export default {
 
 <style scoped>
 .end-of-game-summary {
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0);
   border-radius: 1em;
   max-width: 90%;
   width: 960px;
   margin: 0 auto;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 h2 {
@@ -278,13 +279,13 @@ h2 {
   display: flex;
 }
 .next-game {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #6c6b67;
   padding-bottom: 15px;
 }
 .current-game {
   margin: 10px 0 10px 0;
   padding: 10px 20px 10px 20px;
-  border-right: 1px solid black;
+  border-right: 1px solid #6c6b67;
   width: 38.2%;
   display: flex;
   flex-direction: column;
@@ -315,10 +316,11 @@ h2 {
 .question-boxes {
   display: flex;
   justify-content: space-between;
-  border: 1px solid black;
+  border: 1px solid rgba(255, 255, 255, 0);
   padding-left: 15px;
   border-radius: 1.5em;
   overflow: hidden;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .box {
@@ -332,30 +334,38 @@ h2 {
 }
 
 .view-questions-div {
-  border-left: 1px solid black;
+  border-left: 1px solid #6c6b67;
   padding-left: 10px;
   transition: 0.2s all;
 }
 .view-questions-div p {
   margin: 5px 10px 5px 0;
+  color: black;
 }
 .view-questions-div:hover {
-  background-color: black;
+  background-color: #565652;
+}
+.view-questions-div:hover > p {
   color: white;
 }
 
 .view-charts-div {
-  border: 1px solid black;
+  border: 1px solid rgba(255, 255, 255, 0);
   border-radius: 1.5em;
   transition: 0.2s all;
   width: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 .view-charts-div p {
   margin: 5px;
   text-align: center;
+  color: black;
 }
 .view-charts-div:hover {
-  background-color: black;
+  background-color: #565652;
+  border: 1px solid #565652;
+}
+.view-charts-div:hover > p {
   color: white;
 }
 @media (max-width: 860px) {

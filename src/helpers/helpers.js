@@ -11,9 +11,8 @@ Vue.use(VueFlashMessage, {
 });
 
 const vueInstance = new Vue();
-// const baseURL = "http://localhost:1337/request";
-const baseURL =
-  process.env.BASEURL || "https://protected-peak-86063.herokuapp.com/request";
+const baseURL = "http://localhost:1337/request";
+// const baseURL = "https://protected-peak-86063.herokuapp.com/request";
 
 const handleError =
   (fn) =>

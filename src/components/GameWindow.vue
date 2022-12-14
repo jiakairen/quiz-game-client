@@ -244,11 +244,12 @@ export default {
 
 <style scoped>
 .game-window {
-  border: 1px solid black;
+  padding: 10px 0;
   border-radius: 1em;
   max-width: 90%;
   width: 960px;
   margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 .game-controls {
   text-align: center;
@@ -263,7 +264,7 @@ export default {
 }
 
 .incorrect {
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.8);
   color: white;
 }
 .incorrect:hover {
@@ -277,20 +278,27 @@ export default {
 .button-enabled {
   width: 100px;
   height: 30px;
-  border: 1px solid black;
-  background-color: white;
+  border: 1px solid rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 1em;
+  border-radius: 1em;
+  transition: 0.2s all;
 }
 .button-enabled:hover {
   color: white;
-  background-color: black;
+  background-color: #565652;
+  border: 1px solid #565652;
+}
+.button-enabled:active {
+  transform: scale(0.9);
 }
 
 .button-disabled {
   width: 100px;
   height: 30px;
-  border: 1px solid gray;
-  background-color: white;
+  border: 1px solid rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 1em;
   border-radius: 1em;
   color: gray;
   pointer-events: none;

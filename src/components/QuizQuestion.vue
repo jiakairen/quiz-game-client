@@ -16,10 +16,15 @@ export default {
 
 <style scoped>
 .quiz-question {
-  border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 1em;
   padding: 0 10px;
   max-width: 90%;
-  margin: 30px auto;
+  margin: 20px auto;
+  padding: 10px;
+  box-shadow: 0 0 5px #565652;
+}
+h2 {
+  margin: 10px 0;
 }
 </style>

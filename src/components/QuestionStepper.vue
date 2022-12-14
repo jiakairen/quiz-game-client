@@ -1,6 +1,6 @@
 <template>
   <div class="question-stepper">
-    <p>Q {{ currentQuestion + 1 }}/{{ totalQuestion }}</p>
+    <p>Q {{ currentQuestion + 1 }} / {{ totalQuestion }}</p>
   </div>
 </template>
 
@@ -22,9 +22,10 @@ export default {
 
 <style scoped>
 .question-stepper {
-  border: 1px solid black;
   height: 50px;
   width: 100px;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 1em;
 }
 </style>

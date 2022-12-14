@@ -24,7 +24,7 @@ body {
   padding: 0;
   background-image: url("./assets/prism.png");
   background-repeat: repeat;
-  color: white;
+  color: black;
 }
 
 #app {

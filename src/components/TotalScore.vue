@@ -13,9 +13,10 @@ export default {
 
 <style scoped>
 .total-score {
-  border: 1px solid black;
   height: 50px;
   width: 100px;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 1em;
 }
 </style>

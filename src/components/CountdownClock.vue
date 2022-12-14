@@ -48,7 +48,8 @@ export default {
 .clock-container {
   width: 100px;
   height: 50px;
-  border: 1px solid black;
   text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 1em;
 }
 </style>

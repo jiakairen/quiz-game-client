@@ -25,17 +25,18 @@ h4 {
   display: inline-block;
 }
 .quiz-choice {
-  border: 1px solid black;
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 1em;
   padding: 0 10px;
   max-width: 90%;
-  margin: 5px auto;
+  margin: 8px auto;
   display: flex;
   justify-content: space-between;
+  box-shadow: 0 0 2.5px #565652;
 }
 
-.quiz-choice:hover > .choice-text {
-  text-decoration: underline;
+.quiz-choice:hover {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .tail-text {
