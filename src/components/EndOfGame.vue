@@ -79,7 +79,7 @@
         <p>
           Avg. Score Per Day:
           <span class="large-text">
-            {{ pastStats?.avgScorePerDay }}
+            {{ Math.round(pastStats?.avgScorePerDay) }}
           </span>
           / 500 ({{ pastStats?.totalScorePerc }}%)
         </p>
@@ -87,7 +87,7 @@
         <p>
           Avg. Correct Per Day:
           <span class="large-text">
-            {{ pastStats?.aveCorrect }}
+            {{ pastStats?.aveCorrect.toFixed(1) }}
           </span>
           / 5 ({{ pastStats?.aveCorrectPerc }}%)
         </p>
@@ -95,7 +95,7 @@
         <p>
           Avg. Time Per Question:
           <span class="large-text">
-            {{ pastStats?.aveTimePerQuestion }}
+            {{ pastStats?.aveTimePerQuestion.toFixed(1) }}
           </span>
           s
         </p>

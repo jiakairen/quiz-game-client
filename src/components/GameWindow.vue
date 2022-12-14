@@ -33,7 +33,9 @@
       :tailText="tailText.D"
     />
     <div class="game-controls">
-      <button @click="nextQuestion" :class="buttonClass">NEXT</button>
+      <button @click="nextQuestion" :class="buttonClass">
+        {{ altButtonName || "NEXT" }}
+      </button>
     </div>
   </div>
 </template>
@@ -70,6 +72,7 @@ export default {
       },
       ls: null,
       buttonClass: "",
+      altButtonName: "",
     };
   },
   methods: {
@@ -180,6 +183,11 @@ export default {
       this.thisRoundScore = null;
       this.ls.currentGame.currentQuestion = this.currentQuestion;
       localStorage.dailyQuiz = JSON.stringify(this.ls);
+      if (this.currentQuestion === 4) {
+        this.altButtonName = "COMPLETE";
+      } else {
+        this.altButtonName = "";
+      }
     },
     quizSet: function () {
       for (let i = 0; i < this.quizSet.length; i++) {
