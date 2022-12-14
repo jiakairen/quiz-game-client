@@ -35,7 +35,7 @@ h4 {
   box-shadow: 0 0 2.5px #565652;
 }
 
-.quiz-choice:hover {
+.quiz-choice:not(.correct, .incorrect):hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
 

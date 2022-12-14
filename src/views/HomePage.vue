@@ -186,7 +186,7 @@ export default {
 
 <style scoped>
 .game {
-  margin-top: 15px;
+  padding-top: 5px;
 }
 .info {
   display: flex;
