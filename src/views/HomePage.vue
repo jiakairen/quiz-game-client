@@ -3,7 +3,7 @@
     <div class="game" :class="gameClass">
       <div class="info">
         <TotalScore
-          v-if="gameState === 3 || gameState === 4"
+          v-if="(gameState === 3 || gameState === 4) && currentQuestion !== -1"
           :totalScore="totalScore"
         />
         <CountdownClock
