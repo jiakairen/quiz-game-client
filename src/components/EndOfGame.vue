@@ -268,6 +268,7 @@ export default {
   max-width: 90%;
   width: 960px;
   margin: 0 auto;
+  text-align: center;
 }
 
 h2 {
@@ -360,7 +361,6 @@ h2 {
 @media (max-width: 860px) {
   .current-past {
     flex-direction: column;
-    text-align: center;
   }
   .todays-summary {
     padding-bottom: 10px;
