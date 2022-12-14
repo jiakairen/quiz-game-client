@@ -248,7 +248,7 @@ export default {
   border-radius: 1em;
   max-width: 90%;
   width: 960px;
-  margin: 0 auto;
+  margin: 20px auto;
   background-color: rgba(255, 255, 255, 0.8);
 }
 .game-controls {
@@ -283,6 +283,7 @@ export default {
   border-radius: 1em;
   border-radius: 1em;
   transition: 0.2s all;
+  color: black;
 }
 .button-enabled:hover {
   color: white;

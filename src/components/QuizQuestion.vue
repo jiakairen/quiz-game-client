@@ -22,7 +22,7 @@ export default {
   max-width: 90%;
   margin: 20px auto;
   padding: 10px;
-  box-shadow: 0 0 5px #565652;
+  box-shadow: 0 0 2.5px #565652;
 }
 h2 {
   margin: 10px 0;
