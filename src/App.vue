@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <div class="nav-bar">
-      <router-link to="/" class="nav-links">QUIZ</router-link>
-      <router-link to="/login" class="nav-links">LOG IN</router-link>
+      <div class="title">DAILY QUIZ</div>
+      <div>
+        <router-link to="/" class="nav-links">HOME</router-link>
+        <router-link to="/login" class="nav-links">LOG IN</router-link>
+      </div>
     </div>
     <router-view />
   </div>
@@ -35,7 +38,15 @@ body {
 
 .nav-bar {
   text-align: right;
-  margin: 5px 10px 0 0;
+  margin: 0;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  margin: 0 10px;
+  color: white;
 }
 
 .nav-links {

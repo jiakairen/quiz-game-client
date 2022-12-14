@@ -185,6 +185,9 @@ export default {
 </script>
 
 <style scoped>
+.game {
+  margin-top: 15px;
+}
 .info {
   display: flex;
   justify-content: space-around;

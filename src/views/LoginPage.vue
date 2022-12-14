@@ -22,5 +22,6 @@ export default {
 h1,
 h4 {
   text-align: center;
+  color: white;
 }
 </style>
