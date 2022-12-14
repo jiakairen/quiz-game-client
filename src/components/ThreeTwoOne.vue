@@ -44,6 +44,7 @@ export default {
   width: 200px;
   border: 1px solid black;
   text-align: center;
+  color: black;
 }
 .three-two-one p {
   font-size: 60px;

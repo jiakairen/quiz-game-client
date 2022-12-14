@@ -19,11 +19,18 @@ export default {
   box-sizing: border-box;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("./assets/prism.png");
+  background-repeat: repeat;
+  color: white;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
 }
 
 .nav-bar {
@@ -32,7 +39,7 @@ export default {
 
 .nav-links {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
   margin: 0 10px;
 }
 </style>

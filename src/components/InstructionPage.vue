@@ -48,6 +48,7 @@ h2 {
   border: 1px solid black;
   border-radius: 1em;
   padding: 20px;
+  color: black;
 }
 
 .container li {
