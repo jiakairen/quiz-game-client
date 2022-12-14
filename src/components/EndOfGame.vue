@@ -357,33 +357,31 @@ h2 {
   background-color: black;
   color: white;
 }
-/* @media (max-width: 760px) {
-  .question-boxes {
-    flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 0px;
-    padding-top: 10px;
-  }
-  .view-questions-div {
-    border-left: 0px;
-    border-top: 1px solid black;
-    padding-left: 0px;
-  }
-  .view-questions-div p {
-    margin: 10px;
+@media (max-width: 860px) {
+  .current-past {
+    flex-direction: column;
     text-align: center;
   }
-} */
-/* .button-enabled:hover {
-  color: white;
-  background-color: black;
-} */
-
-/* .q-box {
-  width: 25px;
-  height: 25px;
-  border: 1px solid black;
-  margin: 0 5px;
-  border-radius: 100%;
-} */
+  .todays-summary {
+    padding-bottom: 10px;
+  }
+  .current-game {
+    margin: 0 10px 0 10px;
+    border-right: 0px;
+    border-bottom: 1px solid black;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .past-stats {
+    width: 95%;
+  }
+  .question-boxes,
+  .view-charts-div {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
 </style>
