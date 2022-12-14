@@ -4,7 +4,7 @@
     <div class="current-past">
       <div class="current-game">
         <div class="next-game">
-          <h4>Next Game In:</h4>
+          <h4>Next Game In</h4>
           <p>
             {{
               (countdownHH || "--") +
