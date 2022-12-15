@@ -6,7 +6,7 @@
         <div class="current-game">
           <div class="next-game">
             <h4>Next Game In</h4>
-            <p>
+            <p v-if="!newGameReady">
               {{
                 (countdownHH || "--") +
                 " : " +
@@ -20,7 +20,7 @@
               @click="playNewQuiz"
               v-if="newGameReady"
             >
-              <p>PLAY NEW QUIZ</p>
+              <p>PLAY NEW QUIZ NOW</p>
             </div>
           </div>
           <div class="todays-summary">
