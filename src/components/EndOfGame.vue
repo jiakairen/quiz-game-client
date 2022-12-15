@@ -410,6 +410,9 @@ h2 {
   padding-right: 10px;
   transition: 0.2s all;
   cursor: default;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .view-questions-div p {
   margin: 5px 10px 5px 0;
@@ -429,6 +432,9 @@ h2 {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.8);
   cursor: default;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .view-charts-div p {
   margin: 5px;
@@ -442,6 +448,10 @@ h2 {
 .view-charts-div:hover > p {
   color: white;
 }
+.view-charts-div:active {
+  transform: scale(0.9);
+}
+
 .review-questions,
 .past-charts {
   position: fixed;
