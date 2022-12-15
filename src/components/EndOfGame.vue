@@ -341,6 +341,7 @@ export default {
   margin: 0 auto;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.8);
+  transition: 0.1s all;
 }
 
 h2 {
