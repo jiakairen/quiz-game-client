@@ -1,24 +1,68 @@
-# quiz-game
+# quiz-game (aka Daily Quiz for now...) - Project 3
 
-## Project setup
-```
-npm install
-```
+![logo](public/favicon.ico)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+This is a daily quiz game that generates 5 questions everyday. Everyone accessing the game on the same day will receive the same 5 questions (like wordle). It uses local storage to keep track of the stats. This is the final project for the General Assembly Software Engineering Immersive course (SEI57). Consolidating learnings on Vue, node.js, express and MongoDB.
 
-### Compiles and minifies for production
-```
-npm run build
-```
+You can visit the deployed site by clicking [here](https://dailyquiz.netlify.app/).
 
-### Lints and fixes files
-```
-npm run lint
-```
+---
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Project Snapshot
+
+![Landing Page](readme_images/ss1.jpg)
+![Quiz Page](readme_images/ss3.jpg)
+![Summary Page](readme_images/ss4.jpg)
+
+---
+
+## Stack
+
+- Vue.js
+- Node.js / express
+- MongoDB
+
+---
+
+## APIs Used
+
+- [The Trivia API](https://the-trivia-api.com/)
+
+---
+
+## Features
+
+- The server refreshes the question set everyday at midnight (UTC)
+- Same questions for everyone on the same daty
+- Time-based scoring
+- Summary of game stats after completing the quiz for the day
+- Uses local storage for storing game stats and status
+
+---
+
+## Known Issues
+
+- Loading of questions might take upto 10 seconds when the server recovers from sleep.
+- Opening multiple tabs of the game appears to mess with the local storage
+- CSS glitches especially with blur
+
+---
+
+## Future Plans
+
+- Add log in so stats can be saved
+- Add team so people can join the same team and compete with each other
+- Add review questions on the summary page
+- Add charts on the summary page
+
+---
+
+## Special Thanks
+
+Thanks to Loden ([Github](https://github.com/Tenzang)) and Joel ([Github](https://github.com/wofockham)) for their help at General Assembly Australia.
+
+---
+
+## Special Special Thanks
+
+Thanks nico ([Github](https://github.com/Anico94)) for the idea and numerous suggestions. You always come up with good stuff on the train 🚃 😬

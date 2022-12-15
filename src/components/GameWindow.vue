@@ -1,39 +1,57 @@
 <template>
   <div class="game-window">
     <QuizQuestion
-      :question="quizSet[currentQuestion]?.question || 'loading'"
+      :question="
+        quizSet[currentQuestion]?.question || 'Hold on, server waking up...'
+      "
       :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="quizSet[currentQuestion]?.scrambledChoices[0] || 'loading'"
+      :option="
+        quizSet[currentQuestion]?.scrambledChoices[0] ||
+        'Hold on, server waking up...'
+      "
       :optionName="'A'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.A"
       :tailText="tailText.A"
+      :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="quizSet[currentQuestion]?.scrambledChoices[1] || 'loading'"
+      :option="
+        quizSet[currentQuestion]?.scrambledChoices[1] ||
+        'Hold on, server waking up...'
+      "
       :optionName="'B'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.B"
       :tailText="tailText.B"
+      :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="quizSet[currentQuestion]?.scrambledChoices[2] || 'loading'"
+      :option="
+        quizSet[currentQuestion]?.scrambledChoices[2] ||
+        'Hold on, server waking up...'
+      "
       :optionName="'C'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.C"
       :tailText="tailText.C"
+      :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="quizSet[currentQuestion]?.scrambledChoices[3] || 'loading'"
+      :option="
+        quizSet[currentQuestion]?.scrambledChoices[3] ||
+        'Hold on, server waking up...'
+      "
       :optionName="'D'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.D"
       :tailText="tailText.D"
+      :currentQuestion="currentQuestion"
     />
     <div class="game-controls">
-      <button @click="nextQuestion" :class="buttonClass">
+      <button @click="nextQuestion" :class="buttonClass" class="next-button">
         {{ altButtonName || "NEXT" }}
       </button>
     </div>
@@ -82,6 +100,7 @@ export default {
       this.thisRoundPlayed = true;
     },
     nextQuestion() {
+      if (this.currentQuestion === -1) return;
       if (this.currentQuestion === 4) {
         this.$emit("gameState", 5);
         return;
@@ -277,14 +296,18 @@ export default {
   opacity: 0.4;
 }
 
-.button-enabled {
+.next-button {
   width: 100px;
   height: 30px;
   border: 1px solid rgba(255, 255, 255, 0);
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.4);
   border-radius: 1em;
-  border-radius: 1em;
+  color: gray;
   transition: 0.2s all;
+}
+
+.button-enabled {
+  background-color: rgba(255, 255, 255, 0.8);
   color: black;
 }
 .button-enabled:hover {
@@ -297,12 +320,7 @@ export default {
 }
 
 .button-disabled {
-  width: 100px;
-  height: 30px;
-  border: 1px solid rgba(255, 255, 255, 0);
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 1em;
-  border-radius: 1em;
   color: gray;
   pointer-events: none;
 }

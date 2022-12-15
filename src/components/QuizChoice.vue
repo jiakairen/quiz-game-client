@@ -13,10 +13,11 @@ export default {
   },
   methods: {
     optionSelected() {
+      if (this.currentQuestion === -1) return;
       this.$emit("optionSelected", this.optionName);
     },
   },
-  props: ["option", "optionName", "tailText"],
+  props: ["option", "optionName", "tailText", "currentQuestion"],
 };
 </script>
 
