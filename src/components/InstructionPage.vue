@@ -22,7 +22,7 @@ export default {
         "Press START to start the game.",
         "There are 5 questions per day. Questions refresh at midnight (UTC) or 10 / 11am (AEST / AEDT) everyday.",
         "Use your mouse or tap to choose an answer. Press NEXT to start the next question.",
-        "You have 30 seconds for each question. Maximum points for correctly answer the question in the first 4 seconds.",
+        "You have 30 seconds for each question. Maximum points for correctly answer the question in the first 3 seconds.",
         "No points given for incorrect answers or no answers.",
         "If you've already started a question, DO NOT refresh the page or close the browser as you will not be able to return to that question.",
       ],

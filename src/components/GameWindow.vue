@@ -147,7 +147,7 @@ export default {
     calculateScore() {
       this.$root.$on("timerStopped", ($event) => {
         if (this.thisRoundSelected === this.thisRoundCorrect) {
-          let tempScore = 112 - (30 - $event) * 3;
+          let tempScore = 109 - (30 - $event) * 3;
           if (tempScore > 100) tempScore = 100;
           this.thisRoundScore = tempScore;
         } else {
