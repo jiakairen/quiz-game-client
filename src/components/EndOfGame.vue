@@ -409,6 +409,7 @@ h2 {
   padding-left: 20px;
   padding-right: 10px;
   transition: 0.2s all;
+  cursor: default;
 }
 .view-questions-div p {
   margin: 5px 10px 5px 0;
@@ -427,6 +428,7 @@ h2 {
   transition: 0.2s all;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.8);
+  cursor: default;
 }
 .view-charts-div p {
   margin: 5px;
