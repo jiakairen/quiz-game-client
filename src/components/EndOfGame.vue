@@ -463,7 +463,7 @@ h2 {
   .current-game {
     margin: 0 10px 0 10px;
     border-right: 0px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #6c6b67;
     width: 95%;
     display: flex;
     flex-direction: column;
