@@ -62,7 +62,7 @@
           </div>
         </div>
         <div class="past-stats">
-          <h4>Past Statistics</h4>
+          <h4>Overall Statistics</h4>
 
           <p>
             Total Questions Answered:
