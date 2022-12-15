@@ -191,7 +191,6 @@ export default {
 <style scoped>
 .game {
   padding-top: 5px;
-  transition: 0.1s all;
 }
 .info {
   display: flex;
