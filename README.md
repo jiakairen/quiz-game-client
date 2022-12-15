@@ -1,4 +1,4 @@
-# quiz-game (aka Daily Quiz for now...) - Project 3
+# quiz-game (aka Daily Quiz for now...) - Project 3 - Front End
 
 ![logo](public/favicon.ico)
 
@@ -19,7 +19,7 @@ You can visit the deployed site by clicking [here](https://dailyquiz.netlify.app
 ## Stack
 
 - Vue.js
-- Node.js / express
+- Node.js / express [link to backend repo](https://github.com/jiakairen/quiz-game-server)
 - MongoDB
 
 ---
