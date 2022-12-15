@@ -24,7 +24,7 @@ export default {
 
 body {
   margin: 0;
-  padding: 0;
+  padding: 0 0 20px 0;
   background-image: url("./assets/prism.png");
   background-repeat: repeat;
   color: black;
