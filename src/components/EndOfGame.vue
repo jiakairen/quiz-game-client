@@ -215,7 +215,6 @@ export default {
         if (ls.latestStatsGameID === this.ls.currentGame.id - 1) {
           ls.isOnStreak = true;
           ls.currentStreak += 1;
-          console.log(ls.currentStreak, ls.maxStreak);
         } else {
           ls.isOnStreak = false;
           ls.currentStreak = 1;
