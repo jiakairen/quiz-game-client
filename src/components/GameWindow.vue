@@ -252,7 +252,9 @@ export default {
     this.ls = this.lsObj;
     this.ls.currentGame.id = response.id;
     const dateToday = new Date();
-    this.ls.currentGame.utcDate = `${dateToday.getUTCDate()}/${dateToday.getUTCMonth()}/${dateToday.getUTCFullYear()}`;
+    this.ls.currentGame.utcDate = `${dateToday.getUTCDate()}/${
+      dateToday.getUTCMonth() + 1
+    }/${dateToday.getUTCFullYear()}`;
 
     if (this.ls.currentGame.score > 0) {
       this.$emit("updateTotalScore", this.ls.currentGame.score);
