@@ -251,6 +251,9 @@ export default {
     this.quizSet = response.quizSet;
     this.ls = this.lsObj;
     this.ls.currentGame.id = response.id;
+    response.quizSet.forEach((quiz, index) => {
+      this.ls.quizSet[index] = quiz.question;
+    });
     const dateToday = new Date();
     this.ls.currentGame.utcDate = `${dateToday.getUTCDate()}/${
       dateToday.getUTCMonth() + 1
