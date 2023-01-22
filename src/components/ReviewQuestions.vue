@@ -5,13 +5,13 @@
       <span class="question"
         >Q{{ Number(index) + 1 }}: {{ quiz.question }}</span
       >
-      <span>Correct answer was: {{ quiz.correct }}.</span>
-      <span v-if="quiz.correct === quiz.selection"
-        >You answered correctly.</span
+      <span>Correct answer was: {{ quiz.correct }}</span>
+      <span v-if="quiz.correct === quiz.selection" class="correct"
+        >You answered correctly</span
       >
-      <span v-if="quiz.correct !== quiz.selection">{{
+      <span v-if="quiz.correct !== quiz.selection" class="incorrect">{{
         quiz.selection === "TIMEOUT"
-          ? "You timed out."
+          ? "You timed out"
           : `You selected: ${quiz.selection}`
       }}</span>
     </p>
@@ -115,5 +115,13 @@ h2 {
 
 .quiz * {
   display: block;
+}
+
+.correct {
+  color: green;
+}
+
+.incorrect {
+  color: rgba(255, 0, 0, 0.8);
 }
 </style>
