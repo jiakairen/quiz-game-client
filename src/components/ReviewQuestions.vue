@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Questions Review</h2>
+    <h2>Question Review</h2>
     <p v-for="(quiz, index) in reviewQuestions" :key="index" class="quiz">
       <span class="question"
         >Q{{ Number(index) + 1 }}: {{ quiz.question }}</span

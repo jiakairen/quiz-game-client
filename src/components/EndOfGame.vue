@@ -454,7 +454,7 @@ h2 {
 
 .review-questions,
 .past-charts {
-  position: fixed;
+  position: absolute;
   top: 100px;
   left: 0;
   right: 0;
