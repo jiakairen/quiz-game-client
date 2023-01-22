@@ -158,6 +158,15 @@ export default {
     this.$root.$on("stepping", ($event) => (this.currentQuestion = $event));
     if (localStorage.dailyQuiz) {
       const obj = JSON.parse(localStorage.dailyQuiz);
+      if (!obj.quizSet) {
+        obj.quizSet = {
+          0: "",
+          1: "",
+          2: "",
+          3: "",
+          4: "",
+        };
+      }
       this.lsObj = obj;
 
       const hasPlayed = obj.stats.hasPlayed;
