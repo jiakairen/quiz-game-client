@@ -5,7 +5,7 @@
       <span class="question"
         >Q{{ Number(index) + 1 }}: {{ quiz.question }}</span
       >
-      <span>Correct answer was: {{ quiz.correct }}</span>
+      <span>Correct answer: {{ quiz.correct }}</span>
       <span v-if="quiz.correct === quiz.selection" class="correct"
         >You answered correctly</span
       >
