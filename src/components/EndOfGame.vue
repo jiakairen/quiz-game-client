@@ -27,7 +27,7 @@
             <h4>Today's Summary</h4>
             <p>Game ID: {{ currentGameStats?.gameID || "loading" }}</p>
 
-            <p>Date: {{ currentGameStats?.date }} (UTC)</p>
+            <p>Date: {{ currentGameStats?.date }} (GMT +0)</p>
 
             <p>
               Total Score:
