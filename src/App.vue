@@ -3,7 +3,7 @@
     <div class="nav-bar">
       <div class="title">DAILY QUIZ</div>
       <div>
-        <router-link to="/" class="nav-links">HOME</router-link>
+        <!-- <router-link to="/" class="nav-links">HOME</router-link> -->
         <!-- <router-link to="/login" class="nav-links">LOG IN</router-link> -->
       </div>
     </div>
