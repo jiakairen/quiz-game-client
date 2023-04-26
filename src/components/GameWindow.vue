@@ -2,15 +2,13 @@
   <div class="game-window">
     <QuizQuestion
       :question="
-        quizSet[currentQuestion]?.question || 'Hold on, server waking up...'
+        quizSet[currentQuestion]?.question ||
+        'Please wait - Waking up from the cheapest Heroku plan...'
       "
       :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="
-        quizSet[currentQuestion]?.scrambledChoices[0] ||
-        'Hold on, server waking up...'
-      "
+      :option="quizSet[currentQuestion]?.scrambledChoices[0] || ' '"
       :optionName="'A'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.A"
@@ -18,10 +16,7 @@
       :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="
-        quizSet[currentQuestion]?.scrambledChoices[1] ||
-        'Hold on, server waking up...'
-      "
+      :option="quizSet[currentQuestion]?.scrambledChoices[1] || ' '"
       :optionName="'B'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.B"
@@ -29,10 +24,7 @@
       :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="
-        quizSet[currentQuestion]?.scrambledChoices[2] ||
-        'Hold on, server waking up...'
-      "
+      :option="quizSet[currentQuestion]?.scrambledChoices[2] || ' '"
       :optionName="'C'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.C"
@@ -40,10 +32,7 @@
       :currentQuestion="currentQuestion"
     />
     <QuizChoice
-      :option="
-        quizSet[currentQuestion]?.scrambledChoices[3] ||
-        'Hold on, server waking up...'
-      "
+      :option="quizSet[currentQuestion]?.scrambledChoices[3] || ' '"
       :optionName="'D'"
       @optionSelected="choiceMade($event)"
       :class="optionClass.D"
