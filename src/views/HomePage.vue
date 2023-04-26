@@ -139,12 +139,6 @@ export default {
     TotalScore,
   },
   watch: {
-    // showInstructions: function () {
-    //   this.generateGameClass();
-    // },
-    // threeTwoOneAtZero: function () {
-    //   this.generateGameClass();
-    // },
     gameState: function () {
       this.generateGameClass();
       this.timeOut = false;

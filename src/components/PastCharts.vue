@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>Charts Coming Soon...</h2>
+    <h2>Charts has unfortunately been scrapped.</h2>
     <!-- <p>{{ chartsData.weekWin }}</p>
     <p>{{ chartsData.weekTime }}</p>
     <p>{{ chartsData.weekPoints }}</p> -->

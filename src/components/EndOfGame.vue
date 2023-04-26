@@ -149,18 +149,18 @@
       v-if="showReview"
       @showReview="showReview = $event"
     />
-    <PastCharts
+    <!-- <PastCharts
       class="past-charts"
       v-if="showCharts"
       @showCharts="showCharts = $event"
       :chartsData="pastStats"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
 import ReviewQuestions from "./ReviewQuestions.vue";
-import PastCharts from "./PastCharts.vue";
+// import PastCharts from "./PastCharts.vue";
 
 export default {
   name: "EndOfGame",
@@ -326,7 +326,7 @@ export default {
   props: ["lsObj"],
   components: {
     ReviewQuestions,
-    PastCharts,
+    // PastCharts,
   },
 };
 </script>
