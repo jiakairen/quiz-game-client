@@ -138,9 +138,9 @@
             day<span v-if="pastStats?.maxStreak !== 1">s</span>
           </p>
 
-          <div class="view-charts-div" @click="showCharts = true">
+          <!-- <div class="view-charts-div" @click="showCharts = true">
             <p>VIEW CHARTS</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -149,12 +149,12 @@
       v-if="showReview"
       @showReview="showReview = $event"
     />
-    <!-- <PastCharts
+    <PastCharts
       class="past-charts"
       v-if="showCharts"
       @showCharts="showCharts = $event"
       :chartsData="pastStats"
-    /> -->
+    />
   </div>
 </template>
 
