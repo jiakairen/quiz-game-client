@@ -3,7 +3,7 @@
     <QuizQuestion
       :question="
         quizSet[currentQuestion]?.question ||
-        'Please wait - Waking up from the cheapest Heroku plan...'
+        'Please wait - Server waking up... (Can take around 10s)'
       "
       :currentQuestion="currentQuestion"
     />
@@ -59,7 +59,6 @@ export default {
   data() {
     return {
       quizSet: [],
-      // currentQ: this.currentQuestion || -1,
       thisRoundSelected: "",
       thisRoundPlayed: false,
       thisRoundCorrect: null,
@@ -90,7 +89,7 @@ export default {
     },
     nextQuestion() {
       if (this.currentQuestion === -1) return;
-      if (this.currentQuestion === 4) {
+      if (this.currentQuestion === 9) {
         this.$emit("gameState", 5);
         return;
       }
@@ -136,7 +135,7 @@ export default {
     calculateScore() {
       this.$root.$on("timerStopped", ($event) => {
         if (this.thisRoundSelected === this.thisRoundCorrect) {
-          let tempScore = 109 - (30 - $event) * 3;
+          let tempScore = 112 - (30 - $event) * 3;
           if (tempScore > 100) tempScore = 100;
           this.thisRoundScore = tempScore;
         } else {
@@ -147,19 +146,6 @@ export default {
         localStorage.dailyQuiz = JSON.stringify(this.ls);
         return;
       });
-      // if (this.thisRoundSelected === this.thisRoundCorrect) {
-      //   console.log("correct, calculating score");
-      //   this.$root.$on("timerStopped", ($event) => {
-      //     this.thisRoundScore = 100 - (30 - $event) * 3;
-      //   });
-      //   return;
-      // } else {
-      //   console.log(this.thisRoundSelected, this.thisRoundCorrect);
-      //   console.log("incorrect, setting score to ZERO");
-      //   this.thisRoundScore = 0;
-      //   this.tailText[this.thisRoundSelected] = "+0 points";
-      //   return;
-      // }
     },
     updateTailText() {
       this.tailText[this.thisRoundSelected] = `+${this.thisRoundScore} points`;
@@ -193,7 +179,7 @@ export default {
       this.thisRoundScore = null;
       this.ls.currentGame.currentQuestion = this.currentQuestion;
       localStorage.dailyQuiz = JSON.stringify(this.ls);
-      if (this.currentQuestion === 4) {
+      if (this.currentQuestion === 9) {
         this.altButtonName = "COMPLETE";
       } else {
         this.altButtonName = "";
@@ -229,9 +215,6 @@ export default {
         this.tailText[this.thisRoundCorrect] = `TIME OUT: +0 points`;
       }
     },
-    // lsObj: function () {
-    //   this.ls = this.lsObj;
-    // },
   },
   props: ["currentQuestion", "timeOut", "lsObj"],
 

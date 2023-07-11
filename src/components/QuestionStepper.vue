@@ -9,13 +9,9 @@ export default {
   name: "QuestionStepper",
   data() {
     return {
-      // currentQuestion: 1,
-      totalQuestion: 5,
+      totalQuestion: 10,
     };
   },
-  // mounted() {
-  //   this.$root.$on("stepping", ($event) => (this.currentQuestion = $event + 1));
-  // },
   props: ["currentQuestion"],
 };
 </script>

@@ -12,7 +12,7 @@
     <p>
       {{
         startButtonMessage ||
-        "Welcome to your new daily quiz! Press START to start."
+        "Welcome to your new daily quiz! Press START when you're ready."
       }}
     </p>
   </div>

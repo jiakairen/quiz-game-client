@@ -34,7 +34,7 @@
               <span class="large-text">
                 {{ currentGameStats?.score }}
               </span>
-              / 500 ({{ Math.round((currentGameStats?.score / 500) * 100) }}%)
+              / 1000 ({{ Math.round((currentGameStats?.score / 1000) * 100) }}%)
             </p>
 
             <p>
@@ -50,7 +50,7 @@
               <span class="large-text">
                 {{ currentGameStats?.correctTot }}
               </span>
-              / 5 ({{ (currentGameStats?.correctTot / 5) * 100 }}%)
+              / 10 ({{ (currentGameStats?.correctTot / 10) * 100 }}%)
             </p>
 
             <div class="question-boxes">
@@ -103,7 +103,7 @@
             <span class="large-text">
               {{ Math.round(pastStats?.avgScorePerDay) }}
             </span>
-            / 500 ({{ pastStats?.totalScorePerc }}%)
+            / 1000 ({{ pastStats?.totalScorePerc }}%)
           </p>
 
           <p>
@@ -111,7 +111,7 @@
             <span class="large-text">
               {{ pastStats?.aveCorrect.toFixed(1) }}
             </span>
-            / 5 ({{ pastStats?.aveCorrectPerc }}%)
+            / 10 ({{ pastStats?.aveCorrectPerc }}%)
           </p>
 
           <p>
@@ -137,10 +137,6 @@
             </span>
             day<span v-if="pastStats?.maxStreak !== 1">s</span>
           </p>
-
-          <!-- <div class="view-charts-div" @click="showCharts = true">
-            <p>VIEW CHARTS</p>
-          </div> -->
         </div>
       </div>
     </div>
@@ -160,7 +156,6 @@
 
 <script>
 import ReviewQuestions from "./ReviewQuestions.vue";
-// import PastCharts from "./PastCharts.vue";
 
 export default {
   name: "EndOfGame",
@@ -250,9 +245,9 @@ export default {
         totalScoreEarned: ls.totPoints,
         totalScoreAvailable: ls.totQuestions * 100,
         totalScorePerc: Math.round(ls.totPoints / ls.totQuestions),
-        avgScorePerDay: (ls.totPoints / ls.totQuestions) * 5,
+        avgScorePerDay: (ls.totPoints / ls.totQuestions) * 10,
         aveTimePerQuestion: ls.totTime / ls.totQuestions,
-        aveCorrect: (ls.totCorrect / ls.totQuestions) * 5,
+        aveCorrect: (ls.totCorrect / ls.totQuestions) * 10,
         aveCorrectPerc: Math.round((ls.totCorrect / ls.totQuestions) * 100),
         currentStreak: ls.currentStreak,
         maxStreak: ls.maxStreak,
@@ -265,10 +260,8 @@ export default {
       const correctBin = this.currentGameStats.correctBin;
       return correctBin.map((c) => {
         if (c === 1) {
-          // return `<div class="q-box correct">Y</div>`;
           return "🟢";
         }
-        // return `<div class="q-box incorrect">N</div>`;
         return "🔴";
       });
     },
@@ -326,7 +319,6 @@ export default {
   props: ["lsObj"],
   components: {
     ReviewQuestions,
-    // PastCharts,
   },
 };
 </script>

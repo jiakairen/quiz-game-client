@@ -66,9 +66,9 @@ const objTemplate = {
   currentGame: {
     id: null,
     utcDate: null,
-    selections: ["", "", "", "", ""],
-    correct: ["", "", "", "", ""],
-    time: [null, null, null, null, null],
+    selections: ["", "", "", "", "", "", "", "", "", ""],
+    correct: ["", "", "", "", "", "", "", "", "", ""],
+    time: [null, null, null, null, null, null, null, null, null, null],
     currentQuestion: null,
     gameState: null,
     score: 0,
@@ -94,6 +94,11 @@ const objTemplate = {
     2: "",
     3: "",
     4: "",
+    5: "",
+    6: "",
+    7: "",
+    8: "",
+    9: "",
   },
 };
 
@@ -159,6 +164,11 @@ export default {
           2: "",
           3: "",
           4: "",
+          5: "",
+          6: "",
+          7: "",
+          8: "",
+          9: "",
         };
       }
       this.lsObj = obj;
@@ -177,7 +187,7 @@ export default {
           }
         }
 
-        if (currentQ === 4) {
+        if (currentQ === 9) {
           this.gameState = 5;
         } else if (currentQ >= 0) {
           this.startButtonMessage = `Next: Question ${currentQ + 2}`;

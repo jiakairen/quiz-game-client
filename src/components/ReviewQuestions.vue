@@ -51,6 +51,31 @@ export default {
           correct: "",
           selection: "",
         },
+        5: {
+          question: "",
+          correct: "",
+          selection: "",
+        },
+        6: {
+          question: "",
+          correct: "",
+          selection: "",
+        },
+        7: {
+          question: "",
+          correct: "",
+          selection: "",
+        },
+        8: {
+          question: "",
+          correct: "",
+          selection: "",
+        },
+        9: {
+          question: "",
+          correct: "",
+          selection: "",
+        },
       },
     };
   },
@@ -61,7 +86,7 @@ export default {
   },
   async mounted() {
     this.lsObj = await JSON.parse(localStorage.dailyQuiz);
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
       this.reviewQuestions[i].question = this.lsObj.quizSet[i];
       this.reviewQuestions[i].correct = this.lsObj.currentGame.correct[i];
       this.reviewQuestions[i].selection = this.lsObj.currentGame.selections[i];
@@ -72,7 +97,6 @@ export default {
 
 <style scoped>
 .container {
-  /* height: 110px; */
   width: 880px;
   max-width: 85%;
   text-align: center;
