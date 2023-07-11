@@ -217,7 +217,7 @@ export default {
         if (ls.currentStreak >= ls.maxStreak) {
           ls.maxStreak = ls.currentStreak;
         }
-        ls.totQuestions += 5;
+        ls.totQuestions += 10;
         ls.totCorrect += this.currentGameStats.correctTot;
         ls.totPoints += this.currentGameStats.score;
         ls.latestStatsGameID = this.ls.currentGame.id;
@@ -260,9 +260,9 @@ export default {
       const correctBin = this.currentGameStats.correctBin;
       return correctBin.map((c) => {
         if (c === 1) {
-          return "🟢";
+          return "-";
         }
-        return "🔴";
+        return "x";
       });
     },
     calculateCountDown() {
