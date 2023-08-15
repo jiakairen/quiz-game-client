@@ -260,9 +260,9 @@ export default {
       const correctBin = this.currentGameStats.correctBin;
       return correctBin.map((c) => {
         if (c === 1) {
-          return "-";
+          return "✓";
         }
-        return "x";
+        return "𐄂";
       });
     },
     calculateCountDown() {
